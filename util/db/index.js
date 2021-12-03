@@ -22,3 +22,7 @@ export async function connenctToCollection(collection) {
 }
 
 export const COLLECTIONS = ['members', 'staff', 'tabs'];
+
+export const STAFF_TYPES = ['MANAGER', 'SERVICE'];
+
+export const SALT_ROUNDS = 5;
