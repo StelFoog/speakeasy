@@ -7,7 +7,7 @@ const URL = `mongodb+srv://${NAME}:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrite
 let cached = global.mongodb; // Handle cached connection
 if (!cached) cached = global.mongodb = { conn: null, promise: null }; // If nothing is cached create object
 
-export async function connenctToCollection(collection) {
+export async function connectToCollection(collection) {
 	if (cached.conn) return cached.conn; // return the cached connection
 
 	if (!cached.promise) {

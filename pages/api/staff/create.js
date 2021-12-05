@@ -1,6 +1,6 @@
 import authorize from '../../../util/db/authorize';
 import bcrypt from 'bcrypt';
-import { connenctToCollection, SALT_ROUNDS, STAFF_TYPES } from '../../../util/db';
+import { connectToCollection, SALT_ROUNDS, STAFF_TYPES } from '../../../util/db';
 
 function validNewStaffObject(staff) {
 	if (typeof staff.name !== 'string') return false;
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
 	if (!validNewStaffObject(body)) return res.status(400).json({ error: 'Invalid body data' });
 
-	const { collection } = await connenctToCollection('staff');
+	const { collection } = await connectToCollection('staff');
 
 	// Verify authorization
 	const { authorized, status, data, authedType } = await authorize(authorization, collection);

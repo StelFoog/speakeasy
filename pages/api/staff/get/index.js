@@ -1,4 +1,4 @@
-import { connenctToCollection } from '../../../../util/db';
+import { connectToCollection } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
 
 function getAuthPnr(authorization) {
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 	const { authorization } = headers;
 	if (!authorization) return res.status(401).json({ error: 'Not authorization provided' });
 
-	const { collection } = await connenctToCollection('staff');
+	const { collection } = await connectToCollection('staff');
 
 	// Verify authorization
 	const { authorized, status, data } = await authorize(authorization, collection);
