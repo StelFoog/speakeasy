@@ -58,12 +58,11 @@ function HomePresenter(props) {
                             })
 
                         })
-                        console.log(result)
                     }}
                     isDisabled={
                         formState === 'register' ?
-                            !staffType || !name || !password || !repeatPassword && password !== repeatPassword :
-                            !name || !password
+                            !staffType || !name || !password || !repeatPassword || !pnr  || pnr.length < 10 && password !== repeatPassword :
+                            !pnr || !password || pnr.length < 10
                     }>
                 </SubmitButtonView>
             </Fragment>
