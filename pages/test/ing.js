@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from '../styles/Home.module.css';
+import styles from '../../styles/Home.module.css';
 
-export default function Example() {
+export default function Testing() {
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -12,10 +12,10 @@ export default function Example() {
 			</Head>
 
 			<main className={styles.main}>
-				<h1 className={styles.title}>EXAMPLE</h1>
+				<h1 className={styles.title}>TESTING</h1>
 
 				<p className={styles.description}>
-					This page only exists as an example in the sidebar. Should be removed the second there are
+					This page only exists to test (deep) the sidebar. Should be removed the second there are
 					other pages to replace it.
 				</p>
 
@@ -27,7 +27,13 @@ export default function Example() {
 
 				<p>
 					<Link href="/test" passHref>
-						<a>Go to test</a>
+						<a>Go back to test</a>
+					</Link>
+				</p>
+
+				<p>
+					<Link href="/example" passHref>
+						<a>Go to example</a>
 					</Link>
 				</p>
 			</main>

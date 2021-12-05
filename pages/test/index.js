@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import styles from '../styles/Home.module.css';
+import styles from '../../styles/Home.module.css';
 
 export default function Test() {
 	return (
@@ -15,13 +15,19 @@ export default function Test() {
 				<h1 className={styles.title}>TEST</h1>
 
 				<p className={styles.description}>
-					This page only exists to test the sidebar. If included in a commit: make sure it never
-					reaches a PR.
+					This page only exists to test the sidebar. Should be removed the second there are other
+					pages to replace it.
 				</p>
 
 				<p>
 					<Link href="/" passHref>
 						<a>Go back to index</a>
+					</Link>
+				</p>
+
+				<p>
+					<Link href="/test/ing" passHref>
+						<a>Go up to test/ing</a>
 					</Link>
 				</p>
 
