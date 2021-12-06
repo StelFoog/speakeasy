@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../redux/user';
 import styles from '../styles/SideBar.module.css';
 
 function SideBarItem({ children, path }) {
@@ -20,14 +22,17 @@ export default function SideBar() {
 	const router = useRouter();
 	if (router.pathname === '/') return <></>;
 
+	const user = useSelector(selectUser);
+
 	return (
 		<ul className={styles.container}>
 			{/* Maybe remove ||, added to give some character, but maybe an icon instead */}
 			<li className={`selfCenter ${styles.menuHead}`}>|| Speakeasy ||</li>
-			<SideBarItem path="test">
-				<span className={styles.staffName}>Test</span>
-				<span className={styles.staffPnr}>010101-0101</span>
+			<SideBarItem path="drinks">
+				<span className={styles.staffName}>{user.name}</span>
+				<span className={styles.staffPnr}>{user.pnr}</span>
 			</SideBarItem>
+			<SideBarItem path="test">Test</SideBarItem>
 			<SideBarItem path="example">Example</SideBarItem>
 		</ul>
 	);
