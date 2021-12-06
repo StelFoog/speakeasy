@@ -2,19 +2,11 @@ import styles from './FormView.module.css'
 
 export function SubmitButtonView(props) {
     return (
-        <>
-            {props.formState === "register" ?
-                <button
-                    disabled={props.isDisabled}
-                    onClick={props.onRegister}>
-                    Register
-                </button>
-                : <button
-                    disabled={props.isDisabled}
-                    onClick={props.onLogin}>
-                    Login
-                </button>}
-        </>
+        <button
+            disabled={props.isDisabled}
+            onClick={props.onSubmit}>
+            {props.action}
+        </button>
     );
 }
 
@@ -22,49 +14,74 @@ function RequiredTextview() {
     return (<span className={styles.required}> *required {' '} </span>)
 }
 
-export function LoginRegisterForm(props) {
+export function RegisterForm(props) {
+    return (<form onSubmit={(event) => {
+        event.preventDefault()
+    }}>
+        <label htmlFor="pnr">
+            Personal ID Number {' '}
+            <input id="pnr" placeholder="YYMMDDXXXX" type="text" maxLength={10} minLength={10}
+                   onChange={(change) => {
+                       props.onPnrChange(change.target.value)
+                   }}/>
+            {(!props.pnr || props.pnr.length < 10) && <RequiredTextview/>}
+        </label>
+        <br/>
+        <label htmlFor="name">
+            Username {' '}
+            <input id="name" placeholder="Name" type="text" autoComplete="name" required
+                   onChange={(change) => {
+                       props.onNameChange(change.target.value)
+                   }}/>
+            {!props.username && <RequiredTextview/>}
+            <br/>
+        </label>
+        <label htmlFor="password">
+            Password {' '}
+            <input id="password" placeholder="Password" type="password" required
+                   onChange={(change) => {
+                       props.onPasswordChange(change.target.value)
+                   }}/>
+            {!props.password && <RequiredTextview/>}
+        </label>
+        <br/>
+        <label htmlFor="repeat-password">
+            Repeat Password {' '}
+            <input id="repeat-password" type="password" required placeholder="Confirm Password"
+                   onChange={(change) => {
+                       props.onRepeatPasswordChange(change.target.value)
+                   }}
+            />
+            {!props.repeatPassword && <RequiredTextview/>}
+            <br/>
+        </label>
+
+    </form>)
+}
+
+export function LoginForm(props) {
     return (
         <form onSubmit={(event) => {
             event.preventDefault()
         }}>
             <label htmlFor="pnr">
                 Personal ID Number {' '}
-                <input id="pnr" placeholder="YYMMDDXXXX" type="text"  maxLength={10} minLength={10}
+                <input id="pnr" placeholder="YYMMDDXXXX" type="text" maxLength={10} minLength={10}
                        onChange={(change) => {
                            props.onPnrChange(change.target.value)
                        }}/>
                 {(!props.pnr || props.pnr.length < 10) && <RequiredTextview/>}
             </label>
             <br/>
-            <label htmlFor="name"  hidden={props.formState !== "register"}>
-                Username {' '}
-                <input id="name" placeholder="Name" type="text" autoComplete="name" required
-                       onChange={(change) => {
-                           props.onNameChange(change.target.value)
-                       }}/>
-                {!props.username && <RequiredTextview/>}
-                <br/>
-            </label>
             <label htmlFor="password">
                 Password {' '}
                 <input id="password" placeholder="Password" type="password" required
-                                onChange={(change) => {
-                                    props.onPasswordChange(change.target.value)
-                                }}/>
+                       onChange={(change) => {
+                           props.onPasswordChange(change.target.value)
+                       }}/>
                 {!props.password && <RequiredTextview/>}
             </label>
             <br/>
-            <label htmlFor="repeat-password" hidden={props.formState !== "register"}>
-                Repeat Password {' '}
-                <input id="repeat-password" type="password" required placeholder="Confirm Password"
-                       onChange={(change) => {
-                           props.onRepeatPasswordChange(change.target.value)
-                       }}
-                />
-                {!props.repeatPassword && <RequiredTextview/>}
-                <br/>
-            </label>
-
         </form>
     )
 }
@@ -114,6 +131,5 @@ export function FormStateRadioView(props) {
                 </label>
             </form>
         </div>
-
     )
 }
