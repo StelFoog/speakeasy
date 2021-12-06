@@ -1,4 +1,4 @@
-import styles from './FormView.module.css'
+import styles from '../styles/Home.module.css'
 
 export function SubmitButtonView(props) {
     return (
