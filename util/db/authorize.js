@@ -8,5 +8,5 @@ export default async function (authorization, collection) {
 	if (!bcrypt.compareSync(authPass, authData.password))
 		return { authorized: false, status: 400, data: { error: 'Invalid password' } };
 
-	return { authorized: true, authedType: authData.type };
+	return { authorized: true, authedType: authData.type, authedName: authData.name };
 }
