@@ -26,11 +26,9 @@ export default function Drinks(props) {
 				{result !== null && (
 					<div>
 						<span>Results:</span>
-						{result.length < 1 ? (
-							<span>No drinks found</span>
-						) : (
-							result.map(({ strDrink, id }) => <h4 key={id}>{strDrink}</h4>)
-						)}
+						{result.map(({ strDrink, id }) => (
+							<h4 key={id}>{strDrink}</h4>
+						))}
 					</div>
 				)}
 			</main>
