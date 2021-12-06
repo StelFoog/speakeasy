@@ -1,13 +1,18 @@
 import {useState, Fragment} from "react";
-import {SubmitButtonView, LoginForm} from "./HomeViews";
-import WelcomeView from "./WelcomeView";
-import bcrypt from 'bcrypt';
-import {SALT_ROUNDS} from "../util/db";
+import {SubmitButtonView, LoginForm, ErrorText} from "./HomeViews";
+import WelcomeView from "./WelcomeView"
+import { useRouter } from 'next/router'
+
+
+import {reject} from "bcrypt/promises";
+import {error} from "next/dist/build/output/log";
 
 
 function HomePresenter(props) {
     const [password, setPassword] = useState('');
     const [pnr, setPnr] = useState('')
+    const [error, setError] = useState('')
+    const router = useRouter()
     return (
         <WelcomeView components={
             <Fragment>
@@ -19,20 +24,30 @@ function HomePresenter(props) {
                 </LoginForm>
                 <SubmitButtonView
                     action={"Login"}
-                    onSubmit={async () => {
-                        const result = await fetch('/api/staff/login', {
+                    onSubmit={() => {
+                        fetch('/api/staff/login', {
                             method: 'GET',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `${pnr}+${bcrypt.hash(password, SALT_ROUNDS)}`
+                                'Authorization': `${pnr}+${(password)}`
                             },
                         })
+                            .then(res => res.json())
+                            .then(data => {
+                                const {error, type} = data
+                                if (!error) {
+                                    // TODO router.push("nextpage")
+                                } else {
+                                    setError(error)
+                                    setTimeout(()=>{setError('')}, 5000)
+                                }
+                            }).catch(err => console.log(err.statusText))
 
-                        console.log(result)
                     }
                     }
                     isDisabled={!pnr || !password || pnr.length !== 10}>
                 </SubmitButtonView>
+                <ErrorText isDisabled= {!error} error = {error}/>
             </Fragment>
         }/>
     )
