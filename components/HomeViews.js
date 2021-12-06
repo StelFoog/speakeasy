@@ -10,6 +10,12 @@ export function SubmitButtonView(props) {
     );
 }
 
+export function ErrorText(props) {
+    return (props.isDisabled || <div className={styles.error}>
+        {props.error}
+    </div>)
+}
+
 function RequiredTextview() {
     return (<span className={styles.required}> *required {' '} </span>)
 }
