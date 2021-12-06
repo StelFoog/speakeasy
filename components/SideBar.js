@@ -19,10 +19,9 @@ function SideBarItem({ children, path }) {
 }
 
 export default function SideBar() {
+	const user = useSelector(selectUser);
 	const router = useRouter();
 	if (router.pathname === '/') return <></>;
-
-	const user = useSelector(selectUser);
 
 	return (
 		<ul className={styles.container}>
