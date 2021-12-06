@@ -1,8 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Speakeasy
 
-## Getting Started
+This is a webapp to be used by the staff of a (theoretical) speakeasy. It will track their work, what members there are, if they are in the speakeasy at the moment and their open tabs. 
 
-First, run the development server:
+It is implemented in Next.js, uses thecocktaildb as a database for drinks and has mongodb as a database for staff and member data.
+
+## Deployment
+
+The app is currently deployed at [https://speakeasy-ten.vercel.app](https://speakeasy-ten.vercel.app).
+
+## Running locally
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -10,25 +18,39 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the deployment.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Structure
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+`/components/` contains reusable components and components that are used mostly globally.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+`/pages/` contains the pages that will be rendered. This is done by next so every file corresponds to a page (a a set of pages)
 
-## Learn More
+`/pages/api/` contains the api-endpoints used to communicate with the database
 
-To learn more about Next.js, take a look at the following resources:
+`/public/` contains files that are directly made available on deployment without alteration. Mostly images.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`/redux/` contains files used for global state management
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`/styles/` contains stylesheets. Almost all files are css modules that are scoped to components.
 
-## Deploy on Vercel
+`/util/` contains files with functionallity used in other files
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Work
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Currently the app has:
+
+- [x] api enpoints for creating and getting data for the staff
+- [x] a front page where the staff can sign in
+- [x] a global state to track the signed in user (or that the user isn't signed in)
+- [x] a sidebar for navigation
+- [x] a ruidmentary search function to search for drinks from thecocktaildb api
+
+### The app will have:
+
+- [ ] A fully implemented drinks search
+- [ ] api endpoints for getting and managing members
+- [ ] api endpoints for managing members' tabs
+- [ ] blocking so that only signed in users can access pages
+- [ ] staff can make and check reports (e.g. hours worked)
+- [ ] managers can manage and see staff data
