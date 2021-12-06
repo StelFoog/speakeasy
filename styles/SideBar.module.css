@@ -1,0 +1,49 @@
+.container {
+	min-width: 220px;
+	max-width: 220px;
+	background-color: #0a2433;
+	color: #bbb;
+	max-height: 100%;
+	display: flex;
+	flex-direction: column;
+	font-family: 'Inter', sans-serif;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	font-size: 18px;
+	font-weight: 400;
+	text-transform: capitalize;
+}
+
+.menuHead {
+	font-size: 22px;
+	color: #fff;
+	padding: 14px 0;
+}
+
+.menuItem {
+	width: 100%;
+	padding: 10px 20px;
+	transition: all 0.25s ease;
+	background-color: #00000000;
+	display: flex;
+	flex-direction: column;
+}
+
+.menuItem:hover {
+	color: #fff;
+	cursor: pointer;
+}
+
+.selectedItem {
+	background-color: #00000060;
+	color: #fff;
+}
+
+.staffName {
+	font-weight: 600;
+}
+
+.staffPnr {
+	font-size: 10px;
+}
