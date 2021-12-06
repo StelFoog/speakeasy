@@ -11,8 +11,11 @@ export default async function handler(req, res) {
 	const { collection } = await connectToCollection('staff');
 
 	// Verify authorization
-	const { authorized, status, data, authedType } = await authorize(authorization, collection);
+	const { authorized, status, data, authedType, authedName } = await authorize(
+		authorization,
+		collection
+	);
 	if (!authorized) return res.status(status).json(data);
 
-	res.status(200).json({ type: authedType });
+	res.status(200).json({ type: authedType, name: authedName });
 }
