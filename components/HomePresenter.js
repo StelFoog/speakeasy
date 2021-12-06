@@ -4,9 +4,6 @@ import WelcomeView from "./WelcomeView"
 import { useRouter } from 'next/router'
 
 
-import {reject} from "bcrypt/promises";
-import {error} from "next/dist/build/output/log";
-
 
 function HomePresenter(props) {
     const [password, setPassword] = useState('');
