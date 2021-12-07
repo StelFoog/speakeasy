@@ -5,6 +5,7 @@ function getAuthPnr(authorization) {
 	return authorization.split('+')[0];
 }
 
+// gets the user provided in authorization header's data
 export default async function handler(req, res) {
 	const { method, headers } = req;
 	if (method !== 'GET') return res.status(405).json({ error: `Method ${method} not allowed` });

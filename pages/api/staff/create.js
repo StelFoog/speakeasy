@@ -11,6 +11,7 @@ function validNewStaffObject(staff) {
 	return true;
 }
 
+// Checks that there's a body that's a valid staff object and that the user creating it is a manager. Then creates the new user.
 export default async function handler(req, res) {
 	const { method, headers, body } = req;
 	if (method !== 'PUT') return res.status(405).json({ error: `Method ${method} not allowed` });
