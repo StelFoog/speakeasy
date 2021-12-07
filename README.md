@@ -38,6 +38,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Work
 
+Work is done on a new branch for each feature/fix. `dev` is the main working branch while `master` is production branch with continous deployment. Any new feature should be made on a branch named according to the issue it's based on, branched out from `dev`.
+
 ### Currently the app has:
 
 - [x] api enpoints for creating and getting data for the staff
