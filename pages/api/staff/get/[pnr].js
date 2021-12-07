@@ -5,6 +5,7 @@ function getAuthPnr(authorization) {
 	return authorization.split('+')[0];
 }
 
+// gets the data of specified user if the user provided in authorization is a manager
 export default async function handler(req, res) {
 	const { method, headers, query } = req;
 	if (method !== 'GET') return res.status(405).json({ error: `Method ${method} not allowed` });
