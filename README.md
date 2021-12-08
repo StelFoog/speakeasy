@@ -22,19 +22,21 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Structure
 
-`/components/` contains reusable components and components that are used mostly globally.
+- `/components/` contains reusable components and components that are used globally. As an example `/components/SideBar.js` is used only once, but it is used in the `/pages/_app.js` file that renders on every page.
 
-`/pages/` contains the pages that will be rendered. This is done by next so every file corresponds to a page (a a set of pages)
+- `/pages/` contains the pages that will be rendered. This is done by next so every file corresponds to a page (or a set of pages).
 
-`/pages/api/` contains the api-endpoints used to communicate with the database
+- `/pages/api/` contains the api-endpoints used to communicate with the database
 
-`/public/` contains files that are directly made available on deployment without alteration. Mostly images.
+- `/public/` contains files that are directly made available on deployment without alteration. Mostly images.
 
-`/redux/` contains files used for global state management
+- `/redux/` contains files used for global state management
 
-`/styles/` contains stylesheets. Almost all files are css modules that are scoped to components.
+- `/styles/` contains stylesheets. Almost all files are css modules that are scoped to components.
 
-`/util/` contains files with functionallity used in other files
+- `/util/` contains files with functionallity used in other files.
+
+Any non-reusable components or functions will be kept in the same file as the component or function they're used in to improve readability and as can be seen in Next.js' own examples of implementations[^1][^2][^3].
 
 ## Work
 
@@ -56,3 +58,10 @@ Work is done on a new branch for each feature/fix. `dev` is the main working bra
 - [ ] blocking so that only signed in users can access pages
 - [ ] staff can make and check reports (e.g. hours worked)
 - [ ] managers can manage and see staff data
+
+## Footnotes
+
+[^1]: [https://github.com/vercel/next.js/tree/canary/examples/auth0](https://github.com/vercel/next.js/tree/canary/examples/auth0)
+[^2]: [https://github.com/vercel/next.js/tree/canary/examples/with-webassembly](https://github.com/vercel/next.js/tree/canary/examples/with-webassembly)
+[^3]: [https://github.com/vercel/next.js/tree/canary/examples/redirects](https://github.com/vercel/next.js/tree/canary/examples/redirects)
+
