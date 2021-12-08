@@ -38,6 +38,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 Any non-reusable components or functions will be kept in the same file as the component or function they're used in to improve readability and as can be seen in Next.js' own examples of implementations[^1][^2][^3].
 
+### MVP (Model-View-Presenter) Pattern
+
+The model is represented by redux, each page is a presenter that gets and generates data and functions which it feeds to a view declared in the same file, unless the view is used by multiple pages.
+
 ## Work
 
 Work is done on a new branch for each feature/fix. `dev` is the main working branch while `master` is production branch with continous deployment. Any new feature should be made on a branch named according to the issue it's based on, branched out from `dev`.
