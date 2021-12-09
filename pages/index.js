@@ -44,7 +44,7 @@ export default function Index() {
 									const { error, type, name } = data;
 									if (!error) {
 										dispatch(setUser({ name, pnr, password, type }));
-										router.push('drinks');
+										router.push('dashboard');
 									} else {
 										setError(error);
 										setTimeout(() => {

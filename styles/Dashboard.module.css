@@ -1,0 +1,26 @@
+.container {
+	display: flex;
+	flex-direction: column;
+}
+
+.container > div {
+	padding: 0 0.4rem;
+}
+
+.submittedReports {
+	flex: 1;
+}
+
+@media screen and (min-width: 600px) {
+	.container {
+		flex-direction: row-reverse;
+	}
+
+	.container > div {
+		flex: 1;
+	}
+
+	.newReport {
+		max-width: 320px;
+	}
+}

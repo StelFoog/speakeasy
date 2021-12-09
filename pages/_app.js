@@ -7,7 +7,9 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
 			<SideBar />
-			<Component {...pageProps} />
+			<section className={'content'}>
+				<Component {...pageProps} />
+			</section>
 		</Provider>
 	);
 }
