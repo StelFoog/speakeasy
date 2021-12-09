@@ -39,4 +39,5 @@
 .days {
 	display: flex;
 	flex-direction: row;
+	user-select: none;
 }

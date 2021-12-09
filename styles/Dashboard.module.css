@@ -11,7 +11,26 @@
 	flex: 1;
 }
 
-@media screen and (min-width: 600px) {
+.newReport form {
+	display: flex;
+	flex-direction: column;
+}
+
+.newReport label {
+	font-size: 14px;
+	margin: 4px 2px 0px;
+}
+
+.newReport input,
+.newReport textarea {
+	width: 100%;
+}
+
+.newReport button {
+	margin-top: 8px;
+}
+
+@media screen and (min-width: 640px) {
 	.container {
 		flex-direction: row-reverse;
 	}
