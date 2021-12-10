@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { connectToCollection, connectToDatabase } from '.';
+import { connectToDatabase } from '.';
 import authParser from '../authParser';
 
 export default async function (authorization) {
