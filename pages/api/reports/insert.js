@@ -12,7 +12,7 @@ function validNewReportObject(report) {
 	return true;
 }
 
-// Checks that there's a body that's a valid staff object and that the user creating it is a manager. Then creates the new user.
+// Checks that there's a body that's a valid report object and then creates the new report if no report exists for that user and day. If there's a report for that day and the method is POST it updates the report with the new data
 export default async function handler(req, res) {
 	const { method, headers, body } = req;
 	if (method !== 'PUT' && method !== 'POST')

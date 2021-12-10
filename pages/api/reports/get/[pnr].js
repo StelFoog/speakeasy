@@ -3,7 +3,7 @@ import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
 import { REPORTS_PER_REQUEST } from '../../../../util/db/reports';
 
-// gets the user provided in authorization header's data
+// gets reports of the user provided in url
 export default async function handler(req, res) {
 	const { method, headers, query } = req;
 	if (method !== 'GET') return res.status(405).json({ error: `Method ${method} not allowed` });
