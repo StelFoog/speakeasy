@@ -1,6 +1,7 @@
 import { authPnr } from '../../../../util/authParser';
 import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
+import { REPORTS_PER_REQUEST } from '../../../../util/db/reports';
 
 // gets the user provided in authorization header's data
 export default async function handler(req, res) {
@@ -15,7 +16,7 @@ export default async function handler(req, res) {
 	if (!authorized) return res.status(status).json(data);
 
 	const ownPnr = authPnr(authorization);
-	const { pnr } = query;
+	const { pnr, skip = 0 } = query;
 
 	if (!(ownPnr === pnr || authedType === 'MANAGER'))
 		return res.status(401).json({ error: 'Not allowed to read this data' });
@@ -25,7 +26,8 @@ export default async function handler(req, res) {
 		.collection('reports')
 		.find({ pnr: pnr })
 		.sort({ date: -1 })
-		.limit(10)
+		.skip(skip * REPORTS_PER_REQUEST)
+		.limit(REPORTS_PER_REQUEST)
 		.toArray();
 
 	res.status(200).json(reports);
