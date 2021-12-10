@@ -1,9 +1,6 @@
+import { authPnr } from '../../../../util/authParser';
 import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
-
-function getAuthPnr(authorization) {
-	return authorization.split('+')[0];
-}
 
 // gets the user provided in authorization header's data
 export default async function handler(req, res) {
@@ -18,9 +15,9 @@ export default async function handler(req, res) {
 	if (!authorized) return res.status(status).json(data);
 
 	const { db } = await connectToDatabase();
-	const staffData = await db.collection('staff').findOne({ pnr: getAuthPnr(authorization) });
+	const staffData = await db.collection('staff').findOne({ pnr: authPnr(authorization) });
 
 	delete staffData.password;
 
-	res.status(200).json({ data: staffData });
+	res.status(200).json(staffData);
 }

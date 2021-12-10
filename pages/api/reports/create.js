@@ -1,5 +1,6 @@
 import authorize from '../../../util/db/authorize';
 import { connectToDatabase } from '../../../util/db';
+import { authPnr } from '../../../util/authParser';
 
 const isoDateRegex = /[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])/g;
 
@@ -9,10 +10,6 @@ function validNewReportObject(report) {
 	if (report.note && typeof report.note !== 'string') return false;
 
 	return true;
-}
-
-function getAuthPnr(authorization) {
-	return authorization.split('+')[0];
 }
 
 // Checks that there's a body that's a valid staff object and that the user creating it is a manager. Then creates the new user.
@@ -30,7 +27,8 @@ export default async function handler(req, res) {
 	if (!authorized) return res.status(status).json(data);
 
 	const { date, hours, note } = body;
-	const report = { date, hours, note, pnr: getAuthPnr(authorization) };
+	const reportingNote = !note || note.length < 1 ? null : note;
+	const report = { date, hours, note: reportingNote, pnr: authPnr(authorization) };
 
 	const { db } = await connectToDatabase();
 	const result = await db.collection('reports').insertOne(report);
