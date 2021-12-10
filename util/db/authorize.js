@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
+import { connectToCollection, connectToDatabase } from '.';
 
-export default async function (authorization, collection) {
+export default async function (authorization) {
 	const [authPnr, authPass] = authorization.split('+');
-	const authData = await collection.findOne({ pnr: authPnr });
+	const { db } = await connectToDatabase();
+	const authData = await db.collection('staff').findOne({ pnr: authPnr });
+
 	if (!authData)
 		return { authorized: false, status: 400, data: { error: 'No user with that pnr exists' } };
 	if (!bcrypt.compareSync(authPass, authData.password))
