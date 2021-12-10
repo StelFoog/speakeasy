@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
 import { connectToCollection, connectToDatabase } from '.';
+import authParser from '../authParser';
 
 export default async function (authorization) {
-	const [authPnr, authPass] = authorization.split('+');
+	const [authPnr, authPass] = authParser(authorization);
 	const { db } = await connectToDatabase();
 	const authData = await db.collection('staff').findOne({ pnr: authPnr });
 
