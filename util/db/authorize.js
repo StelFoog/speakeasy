@@ -1,8 +1,13 @@
 import bcrypt from 'bcrypt';
+import { connectToDatabase } from '.';
+import authParser from '../authParser';
 
-export default async function (authorization, collection) {
-	const [authPnr, authPass] = authorization.split('+');
-	const authData = await collection.findOne({ pnr: authPnr });
+// takes an authorization header and checks if the user is authorized, if it isn't returns an error, but if it is it returns the users data
+export default async function (authorization) {
+	const [authPnr, authPass] = authParser(authorization);
+	const { db } = await connectToDatabase();
+	const authData = await db.collection('staff').findOne({ pnr: authPnr });
+
 	if (!authData)
 		return { authorized: false, status: 400, data: { error: 'No user with that pnr exists' } };
 	if (!bcrypt.compareSync(authPass, authData.password))
