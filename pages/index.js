@@ -1,7 +1,7 @@
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import ErrorText from "../components/ErrorText";
-import RequiredTextView from "../components/RequiredText"
+import RequiredText from "../components/RequiredText"
 import {useState} from 'react';
 import {useRouter} from 'next/router';
 import {useDispatch} from 'react-redux';
@@ -19,7 +19,7 @@ function LoginForm({pnr, setPnr, password, setPassword, handleSubmit}) {
                        onChange={(change) => {
                            setPnr(change.target.value)
                        }}/>
-                {(!pnr || pnr.length !== 10) && <RequiredTextView/>}
+                {(!pnr || pnr.length !== 10) && <RequiredText/>}
             </label>
             <br/>
             <label htmlFor="password">
@@ -28,11 +28,11 @@ function LoginForm({pnr, setPnr, password, setPassword, handleSubmit}) {
                        onChange={(change) => {
                            setPassword(change.target.value)
                        }}/>
-                {!password && <RequiredTextView/>}
+                {!password && <RequiredText/>}
             </label>
             <br/>
             <button type="submit"
-                    disabled={!pnr || !password && pnr.length !== 10}>
+                    disabled={!pnr || !password || pnr.length !== 10}>
                 Login
             </button>
         </form>
