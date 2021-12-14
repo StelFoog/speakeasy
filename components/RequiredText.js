@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.css";
 
-export default function RequiredTextview() {
+export default function RequiredText() {
     return (<span className={styles.required}> *required {' '} </span>)
 }
