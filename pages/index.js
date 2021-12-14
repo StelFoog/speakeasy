@@ -1,6 +1,7 @@
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
-import { ErrorText, LoginForm, SubmitButtonView } from '../components/HomeViews';
+import ErrorTextView from "../components/ErrorTextView";
+import RequiredTextView from "../components/RequiredTextView"
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -23,15 +24,31 @@ export default function Index() {
 			<main className={styles.main}>
 				<h1 className={styles.title}>Welcome to SpeakEasy</h1>
 				<div className={styles.description}>
-					<LoginForm
-						password={password}
-						pnr={pnr}
-						onPnrChange={setPnr}
-						onPasswordChange={setPassword}
-					></LoginForm>
-					<SubmitButtonView
-						action={'Login'}
-						onSubmit={() => {
+					<form onSubmit={(event) => {
+						event.preventDefault()
+					}}>
+						<label htmlFor="pnr">
+							Personal ID Number {' '}
+							<input id="pnr" placeholder="YYMMDDXXXX" type="text" maxLength={10} minLength={10}
+								   onChange={(change) => {
+									  setPnr(change.target.value)
+								   }}/>
+							{(!pnr || pnr.length !== 10) && <RequiredTextView/>}
+						</label>
+						<br/>
+						<label htmlFor="password">
+							Password {' '}
+							<input id="password" placeholder="Password" type="password" required
+								   onChange={(change) => {
+									  setPassword(change.target.value)
+								   }}/>
+							{!password && <RequiredTextView/>}
+						</label>
+						<br/>
+					</form>
+					<button
+						disabled={!pnr || !password && pnr.length !== 10}
+						onClick={() => {
 							fetch('/api/staff/login', {
 								method: 'GET',
 								headers: {
@@ -53,10 +70,10 @@ export default function Index() {
 									}
 								})
 								.catch((err) => console.log(err.statusText));
-						}}
-						isDisabled={!pnr || !password || pnr.length !== 10}
-					></SubmitButtonView>
-					<ErrorText isDisabled={!error} error={error} />
+						}}>
+						Login
+					</button>
+					<ErrorTextView isDisabled={!error} error={error} />
 				</div>
 			</main>
 		</div>
