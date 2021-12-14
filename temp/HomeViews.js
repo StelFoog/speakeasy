@@ -10,15 +10,6 @@ export function SubmitButtonView(props) {
     );
 }
 
-export function ErrorText(props) {
-    return (props.isDisabled || <div className={styles.error}>
-        {props.error}
-    </div>)
-}
-
-function RequiredTextview() {
-    return (<span className={styles.required}> *required {' '} </span>)
-}
 
 export function RegisterForm(props) {
     return (<form onSubmit={(event) => {
@@ -65,32 +56,6 @@ export function RegisterForm(props) {
     </form>)
 }
 
-export function LoginForm(props) {
-    return (
-        <form onSubmit={(event) => {
-            event.preventDefault()
-        }}>
-            <label htmlFor="pnr">
-                Personal ID Number {' '}
-                <input id="pnr" placeholder="YYMMDDXXXX" type="text" maxLength={10} minLength={10}
-                       onChange={(change) => {
-                           props.onPnrChange(change.target.value)
-                       }}/>
-                {(!props.pnr || props.pnr.length < 10) && <RequiredTextview/>}
-            </label>
-            <br/>
-            <label htmlFor="password">
-                Password {' '}
-                <input id="password" placeholder="Password" type="password" required
-                       onChange={(change) => {
-                           props.onPasswordChange(change.target.value)
-                       }}/>
-                {!props.password && <RequiredTextview/>}
-            </label>
-            <br/>
-        </form>
-    )
-}
 
 export function StaffTypeRadioView(props) {
     return (
@@ -114,7 +79,8 @@ export function StaffTypeRadioView(props) {
                     {!props.staffType && <RequiredTextview/>}
                 </label>
             </form>
-        </>)
+        </>
+    )
 }
 
 export function FormStateRadioView(props) {
