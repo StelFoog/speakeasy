@@ -33,6 +33,7 @@ export default function SideBar() {
 			</SideBarItem>
 			<SideBarItem path="test">Test</SideBarItem>
 			<SideBarItem path="example">Example</SideBarItem>
+			<SideBarItem path="members">Members</SideBarItem>
 		</ul>
 	);
 }
