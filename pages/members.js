@@ -2,16 +2,17 @@ import {useEffect, useState} from "react";
 import Member from "../components/Member";
 import {useSelector} from "react-redux";
 import {selectUser} from "../redux/user";
+import styles from '../styles/Members.module.css'
 
 function MembersList({members}) {
     return (
-        <>
+        <div className={styles.container}>
             {members.map(({_id, name, pnr, inside}) => {
                 return <div key={_id}>
                     <Member name={name} pnr={pnr} status={inside ? "INSIDE" : ""}/>
                 </div>
             })}
-        </>)
+        </div>)
 }
 
 export default function Members() {
