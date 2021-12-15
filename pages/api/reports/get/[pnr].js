@@ -1,7 +1,7 @@
 import { authPnr } from '../../../../util/authParser';
 import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
-import { REPORTS_PER_REQUEST } from '../../../../util/db/reports';
+import { REPORTS_PER_REQUEST } from '../../../../util/db';
 
 // gets reports of the user provided in url
 export default async function handler(req, res) {

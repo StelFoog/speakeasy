@@ -32,3 +32,5 @@ export const COLLECTIONS = ['members', 'reports', 'staff', 'tabs'];
 export const STAFF_TYPES = ['MANAGER', 'SERVICE'];
 
 export const SALT_ROUNDS = 5;
+
+export const REPORTS_PER_REQUEST = 10;
