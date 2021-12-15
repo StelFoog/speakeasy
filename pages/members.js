@@ -28,10 +28,7 @@ export default function Members() {
             }
         })
             .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                return setMembers(data)
-            })
+            .then(data => setMembers(data))
             .catch((err) => console.log(err.statusText));
     }, [])
     return <MembersList members={members}/>
