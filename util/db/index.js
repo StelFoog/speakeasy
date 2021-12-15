@@ -7,27 +7,21 @@ const URL = `mongodb+srv://${NAME}:${PASSWORD}@${CLUSTER}/${DATABASE}?retryWrite
 let cached = global.mongodb; // Handle cached connection
 if (!cached) cached = global.mongodb = { conn: null, promise: null }; // If nothing is cached create object
 
-export async function connectToDatabase() {
+export async function connectToCollection(collection) {
 	if (cached.conn) return cached.conn; // return the cached connection
 
 	if (!cached.promise) {
 		// create the connection promise
 		cached.promise = MongoClient.connect(URL).then((client) => ({
 			client,
-			db: client.db(DATABASE),
+			collection: client.db(DATABASE).collection(collection),
 		}));
 	}
 	cached.conn = await cached.promise; // wait for promise to resolve
 	return cached.conn; // return client and collection
 }
 
-export async function connectToCollection(collection) {
-	const { db } = await connectToDatabase();
-
-	return await db.collection(collection);
-}
-
-export const COLLECTIONS = ['members', 'reports', 'staff', 'tabs'];
+export const COLLECTIONS = ['members', 'staff', 'tabs'];
 
 export const STAFF_TYPES = ['MANAGER', 'SERVICE'];
 
