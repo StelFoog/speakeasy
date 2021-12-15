@@ -17,16 +17,23 @@ function MetaData({name = 'Name Namesson'}) {
 }
 
 function Summary({reports}) {
-  return <h3>
+  return <div className={styles.bla}>
     Total Hours worked:
     {reports.reduce((sum, {hours}) => sum + hours, 0)}
-  </h3>
+  </div>
 }
 
 function Report({date, hours, notes}) {
-  return <>
-    {date + ' ' + hours + ' hours ' + notes}
-  </>
+  return <div className={styles.report}>
+    <div className={styles.hoursAndDates}>
+      <p className={styles.date}>{date}</p>
+      <p className={styles.hours}>{hours} hours </p>
+    </div>
+    <p className={styles.notes}>
+      "{notes}"
+    </p>
+  </div>
+
 }
 
 function NewReport({
@@ -87,7 +94,9 @@ function OldReports({reports}) {
     <div className={styles.submittedReports}>
       {reports.map(({selectedDate, hours, notes}) => {
         return <Box>
-          <Report date={selectedDate} hours={hours} notes={notes}/>
+          <Report style={styles.hoursAndDates}
+                  date={selectedDate}
+                  hours={hours} notes={notes}/>
         </Box>
       })}
     </div>
@@ -131,8 +140,10 @@ export default function Dashboard() {
           notes={note}
           disableSubmit={!date || !hours}
         />
-        <Summary reports={reports}/>
-        <OldReports reports={reports}/>
+        <div className={styles.reportsAndHours}>
+          <Summary reports={reports}/>
+          <OldReports reports={reports}/>
+        </div>
       </main>
     </>
   );
