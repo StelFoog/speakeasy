@@ -1,6 +1,6 @@
 import authorize from '../../../util/db/authorize';
 import bcrypt from 'bcrypt';
-import { connectToDatabase, SALT_ROUNDS, STAFF_TYPES } from '../../../util/db';
+import { connectToCollection, SALT_ROUNDS, STAFF_TYPES } from '../../../util/db';
 
 function validNewStaffObject(staff) {
 	if (typeof staff.name !== 'string') return false;
@@ -21,15 +21,16 @@ export default async function handler(req, res) {
 
 	if (!validNewStaffObject(body)) return res.status(400).json({ error: 'Invalid body data' });
 
+	const { collection } = await connectToCollection('staff');
+
 	// Verify authorization
-	const { authorized, status, data, authedType } = await authorize(authorization);
+	const { authorized, status, data, authedType } = await authorize(authorization, collection);
 	if (!authorized) return res.status(status).json(data);
 	if (authedType !== 'MANAGER')
 		return res.status(400).json({ error: 'User not authorized to take this action' });
 
 	const { name, pnr, plainPassword, type } = body;
-	const { db } = await connectToDatabase();
-	const userWithPnr = await db.collection('staff').findOne({ pnr }, { _id: 1 });
+	const userWithPnr = await collection.findOne({ pnr }, { _id: 1 });
 
 	if (!!userWithPnr)
 		return res.status(400).json({ error: 'There already exists a staff member with that pnr' });
@@ -37,7 +38,7 @@ export default async function handler(req, res) {
 	const pass = bcrypt.hashSync(plainPassword, SALT_ROUNDS);
 	const staffData = { name, pnr, password: pass, type };
 
-	const result = await db.collection('staff').insertOne(staffData);
+	const result = await collection.insertOne(staffData);
 
 	res.status(200).json({ result });
 }
