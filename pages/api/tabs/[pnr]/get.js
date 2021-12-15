@@ -1,6 +1,5 @@
 import authorize from '../../../../util/db/authorize';
-import { connectToDatabase } from '../../../../util/db';
-import { TABS_PER_REQUEST } from '../../../../util/db/tabs';
+import { connectToDatabase, TABS_PER_REQUEST } from '../../../../util/db';
 
 // Gets the members open tab or a list of their closed tabs
 export default async function handler(req, res) {
