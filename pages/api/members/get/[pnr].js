@@ -1,10 +1,9 @@
-import { authPnr } from '../../../../util/authParser';
-import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
+import { connectToDatabase } from '../../../../util/db';
 
-// gets the user provided in authorization header's data
+// Returns data of specified member
 export default async function handler(req, res) {
-	const { method, headers } = req;
+	const { method, headers, query } = req;
 	if (method !== 'GET') return res.status(405).json({ error: `Method ${method} not allowed` });
 
 	const { authorization } = headers;
@@ -15,9 +14,12 @@ export default async function handler(req, res) {
 	if (!authorized) return res.status(status).json(data);
 
 	const { db } = await connectToDatabase();
-	const staffData = await db.collection('staff').findOne({ pnr: authPnr(authorization) });
 
-	delete staffData.password;
+	const { pnr } = query;
+	if (pnr.length !== 10) return res.status(400).json({ error: 'Invalid pnr' });
 
-	res.status(200).json(staffData);
+	const memberData = await db.collection('members').findOne({ pnr });
+	if (!memberData) return res.status(400).json({ error: 'No such member exists' });
+
+	res.status(200).json(memberData);
 }

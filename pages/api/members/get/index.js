@@ -1,10 +1,10 @@
-import { authPnr } from '../../../../util/authParser';
-import { connectToDatabase } from '../../../../util/db';
 import authorize from '../../../../util/db/authorize';
+import { connectToDatabase } from '../../../../util/db';
+import { boolean } from 'boolean';
 
-// gets the user provided in authorization header's data
+// Returns a list of all members or, if otherwise specified, only members who are inside or are not inside
 export default async function handler(req, res) {
-	const { method, headers } = req;
+	const { method, headers, query } = req;
 	if (method !== 'GET') return res.status(405).json({ error: `Method ${method} not allowed` });
 
 	const { authorization } = headers;
@@ -15,9 +15,12 @@ export default async function handler(req, res) {
 	if (!authorized) return res.status(status).json(data);
 
 	const { db } = await connectToDatabase();
-	const staffData = await db.collection('staff').findOne({ pnr: authPnr(authorization) });
 
-	delete staffData.password;
+	const inside = ['true', 'false'].includes(query.inside) ? boolean(query.inside) : null;
+	const members = await db
+		.collection('members')
+		.find(inside !== null ? { inside } : {})
+		.toArray();
 
-	res.status(200).json(staffData);
+	res.status(200).json(members);
 }
