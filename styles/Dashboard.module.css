@@ -1,6 +1,7 @@
 .container {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 }
 
 .container > div {
@@ -50,7 +51,8 @@
 .report {
 	flex-wrap: wrap;
 	flex-direction: column;
-	max-width: 400px;
+	width: 100%;
+
 }
 .hoursAndDates {
 	display: flex;
@@ -62,11 +64,13 @@
 	font-size: 22px;
 	font-weight: 1000;
 	align-self: flex-end;
+	margin: 2px;
 }
 .date {
 	font-size: 22px;
 	font-weight: 1000;
 	align-self: flex-start;
+	margin: 2px;
 }
 .notes {
 	font-size: 14px;

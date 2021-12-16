@@ -18,7 +18,7 @@ function MetaData({name = 'Name Namesson'}) {
 
 function Summary({reports}) {
   return <div className={styles.bla}>
-    Total Hours worked:
+    {"Total hours worked this week: "}
     {reports.reduce((sum, {hours}) => sum + hours, 0)}
   </div>
 }
@@ -81,7 +81,7 @@ function NewReport({
           </table>
 
           <button type="submit" disabled={disableSubmit}>
-            Report
+            Submit report
           </button>
         </form>
       </Box>
