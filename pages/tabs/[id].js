@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-<<<<<<< HEAD
 import Box from '../../components/Box';
 import TextInput from '../../components/TextInput';
 import { selectUser } from '../../redux/user';
@@ -89,20 +88,6 @@ function SearchDrink({ query, setQuery, onSearch, drinks, addDrink }) {
 				</ul>
 			)}
 		</Box>
-=======
-import { selectUser } from '../../redux/user';
-import styles from '../../styles/Tab.module.css';
-import { getTabFromId, tabWithIdExists } from '../../util/db/tabs';
-
-function Tab({ memberPnr, timeOpened, items, closed }) {
-	return (
-		<div className={styles.tabContainer}>
-			<div className={styles.tabInfo}>
-				<span>{memberPnr}</span>
-				<span>{closed ? 'Closed' : 'Open'}</span>
-			</div>
-		</div>
->>>>>>> acaff70 (began work on tab page)
 	);
 }
 
@@ -111,19 +96,15 @@ export default function TabWithID({ id }) {
 	const [tab, setTab] = useState(null);
 	const [error, setError] = useState('');
 
-<<<<<<< HEAD
 	const [query, setQuery] = useState('');
 	const [drinks, setDrinks] = useState([]);
 
-=======
->>>>>>> acaff70 (began work on tab page)
 	useEffect(() => {
 		getTabFromId(user, id)
 			.then((data) => setTab(data))
 			.catch((e) => setError(e));
 	}, []);
 
-<<<<<<< HEAD
 	function search() {
 		searchDrinks(query).then((d) => {
 			if (d) setDrinks(d);
@@ -164,25 +145,12 @@ export default function TabWithID({ id }) {
 					/>
 				</>
 			)}
-=======
-	if (!tab) return <span>Loading...</span>;
-	if (error) return <span>An error has occured</span>;
-
-	console.log(tab);
-
-	return (
-		<main>
-			<Tab memberPnr={tab.pnr} closed={tab.closed} />
->>>>>>> acaff70 (began work on tab page)
 		</main>
 	);
 }
 
 export async function getServerSideProps({ req, params }) {
-<<<<<<< HEAD
 	// verifies that a tab with the given id exists, otherwise 404
-=======
->>>>>>> acaff70 (began work on tab page)
 	const { id } = params;
 	const host = req.rawHeaders[1];
 	let exists;
