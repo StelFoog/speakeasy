@@ -24,16 +24,19 @@ export default function SideBar() {
 	if (router.pathname === '/') return <></>;
 
 	return (
-		<ul className={styles.container}>
-			{/* Maybe remove ||, added to give some character, but maybe an icon instead */}
-			<li className={`selfCenter ${styles.menuHead}`}>|| Speakeasy ||</li>
-			<SideBarItem path="drinks">
-				<span className={styles.staffName}>{user.name}</span>
-				<span className={styles.staffPnr}>{user.pnr}</span>
-			</SideBarItem>
-			<SideBarItem path="test">Test</SideBarItem>
-			<SideBarItem path="example">Example</SideBarItem>
-			<SideBarItem path="members">Members</SideBarItem>
-		</ul>
+		<section>
+			<ul className={styles.container}>
+				{/* Maybe remove ||, added to give some character, but maybe an icon instead */}
+				<li className={`selfCenter ${styles.menuHead}`}>|| Speakeasy ||</li>
+				<SideBarItem path="dashboard">
+					<span className={styles.staffName}>{user.name}</span>
+					<span className={styles.staffPnr}>{user.pnr}</span>
+				</SideBarItem>
+				<SideBarItem path="drinks">Drinks</SideBarItem>
+				<SideBarItem path="test">Test</SideBarItem>
+				<SideBarItem path="example">Example</SideBarItem>
+				<SideBarItem path="members">Members</SideBarItem>
+			</ul>
+		</section>
 	);
 }

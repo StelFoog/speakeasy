@@ -1,0 +1,43 @@
+.day {
+	display: flex;
+	flex-direction: column;
+	padding: 0.2rem;
+	align-items: center;
+}
+
+.day:hover {
+	cursor: pointer;
+}
+
+.day > .weekday {
+	font-size: 10px;
+	font-weight: 600;
+	margin-bottom: 2px;
+}
+
+.day > .date {
+	background-color: white;
+	border-radius: 50%;
+	height: 32px;
+	width: 32px;
+	transition: all 0.25s ease;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.day:hover > .date {
+	background-color: lightskyblue;
+}
+
+.day > .date.selected {
+	background-color: #48d;
+	color: white;
+}
+
+.days {
+	display: flex;
+	flex-direction: row;
+	user-select: none;
+}

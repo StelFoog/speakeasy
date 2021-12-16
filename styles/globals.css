@@ -10,6 +10,19 @@ body {
 #__next {
 	display: flex;
 	flex-direction: row;
+	min-height: 100vh;
+}
+
+section.content {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	width: 100%;
+	max-width: 840px;
+	padding: 0.6rem;
 }
 
 a {

@@ -8,8 +8,10 @@ function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<SideBar />
-				<Component {...pageProps} />
+        <SideBar />
+        <section className={'content'}>
+          <Component {...pageProps} />
+				</section>
 			</PersistGate>
 		</Provider>
 	);
