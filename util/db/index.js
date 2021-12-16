@@ -33,6 +33,9 @@ export const STAFF_TYPES = ['MANAGER', 'SERVICE'];
 
 export const SALT_ROUNDS = 5;
 
+<<<<<<< HEAD
 export const TABS_PER_REQUEST = 10;
 
+=======
+>>>>>>> 71f9dd171b991c61df5abba867694c483933ae31
 export const REPORTS_PER_REQUEST = 10;
