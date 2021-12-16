@@ -4,11 +4,11 @@ import { selectUser } from '../../redux/user';
 import styles from '../../styles/Tab.module.css';
 import { getTabFromId, tabWithIdExists } from '../../util/db/tabs';
 
-function Tab({ memberPnr, timeOpened, items, closed }) {
+function Tab({ pnr, timeOpened, items, closed }) {
 	return (
 		<div className={styles.tabContainer}>
 			<div className={styles.tabInfo}>
-				<span>{memberPnr}</span>
+				<span>{pnr}</span>
 				<span>{closed ? 'Closed' : 'Open'}</span>
 			</div>
 		</div>
@@ -33,7 +33,7 @@ export default function TabWithID({ id }) {
 
 	return (
 		<main>
-			<Tab memberPnr={tab.pnr} closed={tab.closed} />
+			<Tab {...tab} />
 		</main>
 	);
 }
