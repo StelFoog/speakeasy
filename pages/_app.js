@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import { Provider } from 'react-redux';
 import SideBar from '../components/SideBar';
 import store, { persistor } from '../redux/store';
-import {PersistGate} from "redux-persist/integration/react";
+import { PersistGate } from 'redux-persist/integration/react';
 
 function MyApp({ Component, pageProps }) {
 	return (

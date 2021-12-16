@@ -2,44 +2,44 @@ import axios from 'axios';
 
 function instance(pnr, password) {
 	return axios.create({
-		baseURL: '/api/reports/',
+		baseURL: '/api/staff/',
 		headers: {
 			Authorization: `${pnr}+${password}`,
 		},
 	});
 }
 
-export async function insertReport({ pnr, password }, report) {
+export async function login({ pnr, password }) {
 	return instance(pnr, password)
-		.put('/insert', report)
+		.get('/login')
+		.then((res) => ({ ...res.data, pnr, password }))
+		.catch((error) => {
+			throw error.response.data;
+		});
+}
+
+export async function create({ pnr, password }, staffMember) {
+	return instance(pnr, password)
+		.put('/create', staffMember)
 		.then((res) => res.data.result)
 		.catch((error) => {
 			throw error.response.data;
 		});
 }
 
-export async function getOwnReports({ pnr, password }, skip = 0) {
+export async function getOwnData({ pnr, password }) {
 	return instance(pnr, password)
-		.get('/get', { params: { skip } })
+		.get('/get')
 		.then((res) => res.data)
 		.catch((error) => {
 			throw error.response.data;
 		});
 }
 
-export async function getStaffReports({ pnr, password }, staffPnr, skip = 0) {
+export async function getStaffData({ pnr, password }, staffPnr) {
 	return instance(pnr, password)
-		.get(`/get/${staffPnr}`, { params: { skip } })
+		.get(`/get/${staffPnr}`)
 		.then((res) => res.data)
-		.catch((error) => {
-			throw error.response.data;
-		});
-}
-
-export async function updateReport({ pnr, password }, report) {
-	return instance(pnr, password)
-		.post('/insert', report)
-		.then((res) => res.data.result)
 		.catch((error) => {
 			throw error.response.data;
 		});
