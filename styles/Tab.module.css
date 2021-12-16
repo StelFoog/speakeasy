@@ -1,12 +1,8 @@
-<<<<<<< HEAD
 /* Tab */
-=======
->>>>>>> 710f09f862c3d506a2a0e0d92e58a06a885b8a14
 .tabContainer {
 	display: flex;
 	flex-direction: column;
 }
-<<<<<<< HEAD
 
 .tabInfo {
 	display: flex;
@@ -155,5 +151,3 @@
 .searchList > li > button {
 	cursor: pointer;
 }
-=======
->>>>>>> 710f09f862c3d506a2a0e0d92e58a06a885b8a14
