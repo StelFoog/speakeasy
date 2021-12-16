@@ -80,3 +80,12 @@ export async function getTabs({ pnr, password }, skip = 0) {
 			throw error.response.data;
 		});
 }
+
+export async function tabWithIdExists(host, tabId) {
+	return axios
+		.get(`http://${host}/api/tabs/get/${tabId}`, { params: { exists: '' } })
+		.then((res) => res.data)
+		.catch((error) => {
+			throw error;
+		});
+}
