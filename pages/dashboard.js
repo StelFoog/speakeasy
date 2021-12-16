@@ -5,7 +5,8 @@ import {selectUser} from '../redux/user';
 import {lastWeekDates} from '../util/dates';
 import styles from '../styles/Dashboard.module.css';
 import DaySelector from '../components/DaySelector';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {getOwnReports, insertReport} from '../util/db/reports'
 
 function MetaData({name = 'Name Namesson'}) {
   return (
@@ -29,7 +30,8 @@ function Report({date, hours, notes}) {
       <p className={styles.date}>{date}</p>
       <p className={styles.hours}>{hours} hours </p>
     </div>
-    <p className={styles.notes}>
+    <p hidden={!notes}
+       className={styles.notes}>
       "{notes}"
     </p>
   </div>
@@ -55,7 +57,7 @@ function NewReport({
           onSubmit={(e) => {
             e.preventDefault();
             if (!disableSubmit)
-              makeReport({selectedDate, hours, notes});
+              makeReport({date: selectedDate, hours, note: notes});
           }}
         >
           <DaySelector dates={dates} selected={selectedDate} onChange={setSelectedDate}/>
@@ -92,19 +94,30 @@ function NewReport({
 function OldReports({reports}) {
   return (
     <div className={styles.submittedReports}>
-      {reports.map(({selectedDate, hours, notes}) => {
-        return <Box>
-          <Report style={styles.hoursAndDates}
-                  date={selectedDate}
-                  hours={hours} notes={notes}/>
-        </Box>
+      {reports.map(({date, hours, note, _id}) => {
+        return (
+          <Box key={_id}>
+            <Report style={styles.hoursAndDates}
+                    date={date}
+                    hours={hours} notes={note}/>
+          </Box>)
       })}
     </div>
   );
 }
 
+function dateSorter(current, next) {
+  if (current.date < next.date) {
+    return 1;
+  } else if (current.date > next.date) {
+    return -1;
+  } else {
+    return 0;
+  }
+}
+
 export default function Dashboard() {
-  const user = useSelector(selectUser);
+  const {pnr, name, password} = useSelector(selectUser);
 
   // new report form values
   const [date, setDate] = useState('');
@@ -112,25 +125,31 @@ export default function Dashboard() {
   const [note, setNote] = useState('');
   const [reports, setReports] = useState([])
 
+
+  useEffect(() => {
+    getOwnReports({pnr, password}).then(data => {
+      setReports(data);
+    })
+  }, [])
+
   function setHoursWorked(input) {
     setHours(Number(input.replace(/\D/g, '')));
   }
 
   return (
     <>
-      <MetaData name={user.name}/>
+      <MetaData name={name}/>
       <main className={styles.container}>
         <NewReport
           makeReport={report => {
-            setReports([...reports, report])
-            fetch('api/reports/insert', {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `${user.pnr}+${user.password}`,
-              },
-              body: report
-            })
+            if (reports.length === 9) {
+              reports.pop()
+              setReports(reports)
+            }
+            insertReport({pnr, password}, report)
+              .then(data => {
+                setReports([report, ...reports].sort(dateSorter))
+              }).catch(console.error)
           }}
           selectedDate={date}
           setSelectedDate={setDate}
@@ -138,7 +157,7 @@ export default function Dashboard() {
           setHours={setHoursWorked}
           setNote={setNote}
           notes={note}
-          disableSubmit={!date || !hours}
+          disableSubmit={(date && hours) || reports.filter((report) => report.date !== date).length > 0}
         />
         <div className={styles.reportsAndHours}>
           <Summary reports={reports}/>
