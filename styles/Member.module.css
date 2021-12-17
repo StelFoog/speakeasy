@@ -11,6 +11,7 @@
 .memberIdentity{
     display: flex;
     flex-direction: column;
+    width: 200px;
     flex: 1;
 }
 
