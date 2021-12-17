@@ -1,5 +1,6 @@
 import authorize from '../../../../util/db/authorize';
 import { connectToDatabase } from '../../../../util/db';
+import { ObjectId } from 'bson';
 
 // Returns data of specified member
 export default async function handler(req, res) {
@@ -16,10 +17,22 @@ export default async function handler(req, res) {
 	const { db } = await connectToDatabase();
 
 	const { pnr } = query;
-	if (pnr.length !== 10) return res.status(400).json({ error: 'Invalid pnr' });
+	switch (pnr.length) {
+		case 10: {
+			const memberData = await db.collection('members').findOne({ pnr });
+			if (!memberData) return res.status(400).json({ error: 'No such member exists' });
 
-	const memberData = await db.collection('members').findOne({ pnr });
-	if (!memberData) return res.status(400).json({ error: 'No such member exists' });
+			return res.status(200).json(memberData);
+		}
+		case 24: {
+			const memberData = await db.collection('members').findOne({ _id: new ObjectId(pnr) });
+			if (!memberData) return res.status(400).json({ error: 'No such member exists' });
 
-	res.status(200).json(memberData);
+			return res.status(200).json(memberData);
+		}
+		default: {
+			res.status(400).json({ error: 'Invalid pnr/id' });
+		}
+	}
+	// if (pnr.length !== 10) return res.status(400).json({ error: 'Invalid pnr' });
 }
