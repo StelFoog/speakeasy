@@ -26,5 +26,5 @@ export default async function handler(req, res) {
 
 	const result = await db.collection('tabs').insertOne(tab);
 
-	res.status(200).json({ result });
+	res.status(200).json(result.insertedId);
 }

@@ -23,6 +23,8 @@ main {
 	width: 100%;
 	max-width: 840px;
 	padding: 0.6rem;
+	display: flex;
+	flex-direction: column;
 }
 
 a {

@@ -12,7 +12,7 @@ function instance(pnr, password) {
 export async function openTab({ pnr, password }, memberPnr) {
 	return instance(pnr, password)
 		.put(`/${memberPnr}/open`)
-		.then((res) => res.data.result)
+		.then((res) => res.data)
 		.catch((error) => {
 			throw error.response.data;
 		});

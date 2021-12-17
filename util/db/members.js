@@ -53,3 +53,12 @@ export async function getMember({ pnr, password }, memberPnr) {
 			throw error.response.data;
 		});
 }
+
+export async function memberWithIdExists(host, memberId) {
+	return axios
+		.get(`http://${host}/api/members/${memberId}/exists`)
+		.then((res) => res.data)
+		.catch((error) => {
+			throw error.response.data;
+		});
+}
