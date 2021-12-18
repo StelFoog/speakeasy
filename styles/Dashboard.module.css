@@ -40,6 +40,10 @@
 	width: 100%;
 }
 
+.newReport textarea {
+	resize: vertical;
+}
+
 .newReport button {
 	margin-top: 8px;
 }
