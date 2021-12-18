@@ -26,7 +26,16 @@
 	margin: 4px 2px 0px;
 }
 
-.newReport input,
+.noteDiv {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.noteDiv label {
+	margin: 0 6px 0 2px;
+}
+
 .newReport textarea {
 	width: 100%;
 }
@@ -52,7 +61,6 @@
 	flex-wrap: wrap;
 	flex-direction: column;
 	width: 100%;
-
 }
 .hoursAndDates {
 	display: flex;
@@ -76,7 +84,6 @@
 	font-size: 14px;
 	font-weight: 400;
 	word-wrap: break-word;
-
 }
 .bla {
 	flex-direction: column;
