@@ -31,6 +31,10 @@
 	width: 100%;
 }
 
+.newReport textarea {
+	resize: vertical;
+}
+
 .newReport button {
 	margin-top: 8px;
 }
@@ -52,7 +56,6 @@
 	flex-wrap: wrap;
 	flex-direction: column;
 	width: 100%;
-
 }
 .hoursAndDates {
 	display: flex;
@@ -76,7 +79,6 @@
 	font-size: 14px;
 	font-weight: 400;
 	word-wrap: break-word;
-
 }
 .bla {
 	flex-direction: column;
