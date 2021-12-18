@@ -50,27 +50,6 @@ export default function Index() {
 	const dispatch = useDispatch();
 
 	function handleSubmit() {
-		// fetch('/api/staff/login', {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 		Authorization: `${pnr}+${password}`,
-		// 	},
-		// })
-		// 	.then((res) => res.json())
-		// 	.then((data) => {
-		// 		const { error, type, name } = data;
-		// 		if (!error) {
-		// 			dispatch(setUser({ name, pnr, password, type }));
-		// 			router.push('dashboard');
-		// 		} else {
-		// 			setError(error);
-		// 			setTimeout(() => {
-		// 				setError('');
-		// 			}, 5000);
-		// 		}
-		// 	})
-		// 	.catch((err) => console.log(err.statusText));
 		login({ pnr, password })
 			.then((user) => {
 				dispatch(setUser(user));
