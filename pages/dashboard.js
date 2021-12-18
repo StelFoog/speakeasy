@@ -157,7 +157,7 @@ export default function Dashboard() {
           setHours={setHoursWorked}
           setNote={setNote}
           notes={note}
-          disableSubmit={(date && hours) || reports.filter((report) => report.date !== date).length > 0}
+          disableSubmit={(!date || !hours) || reports.filter((report) => report.date === date).length !== 0}
         />
         <div className={styles.reportsAndHours}>
           <Summary reports={reports}/>
