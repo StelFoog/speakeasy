@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100px;
+}
+.membersStatus{
+    display: flex;
+    flex-direction: row;
+    width: 200px;
+    border-radius: 25px;
+    border: #0a2433 solid 1px;
+    max-width: 400px;
+    padding: 10px;
+}
+.statusText{
+    width: 100%;
+    justify-content: center;
+}
+.center {
+    border: 5px solid #FFFF00;
+    display: flex;
+    justify-content: center;
+}
+
+
+
+
