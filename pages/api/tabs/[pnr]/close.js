@@ -21,9 +21,11 @@ export default async function handler(req, res) {
 	const openTab = await db.collection('tabs').findOne({ pnr, closed: false });
 	if (!openTab) return res.status(400).json({ error: "Member doesn't have an open tab" });
 
+	const timeClosed = new Date();
+
 	const result = await db
 		.collection('tabs')
-		.updateOne({ _id: openTab._id }, { $set: { closed: true, timeClosed: new Date() } });
+		.updateOne({ _id: openTab._id }, { $set: { closed: true, timeClosed } });
 
-	res.status(200).json({ result });
+	res.status(200).json({ ...openTab, closed: true, timeClosed });
 }

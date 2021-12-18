@@ -46,5 +46,5 @@ export default async function handler(req, res) {
 		.collection('tabs')
 		.updateOne({ _id: openTab._id }, { $set: { items: newItems } });
 
-	res.status(200).json({ result });
+	res.status(200).json(newItems);
 }

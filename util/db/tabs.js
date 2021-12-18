@@ -21,7 +21,7 @@ export async function openTab({ pnr, password }, memberPnr) {
 export async function closeTab({ pnr, password }, memberPnr) {
 	return instance(pnr, password)
 		.post(`/${memberPnr}/close`)
-		.then((res) => res.data.result)
+		.then((res) => res.data)
 		.catch((error) => {
 			throw error.response.data;
 		});
@@ -48,7 +48,7 @@ export async function getOpenTab({ pnr, password }, memberPnr) {
 export async function addItemToTab({ pnr, password }, memberPnr, itemId) {
 	return instance(pnr, password)
 		.post(`/${memberPnr}/add/${itemId}`)
-		.then((res) => res.data.result)
+		.then((res) => res.data)
 		.catch((error) => {
 			error.response.data;
 		});
@@ -57,7 +57,7 @@ export async function addItemToTab({ pnr, password }, memberPnr, itemId) {
 export async function removeItemFromTab({ pnr, password }, memberPnr, itemId) {
 	return instance(pnr, password)
 		.post(`/${memberPnr}/remove/${itemId}`)
-		.then((res) => res.data.result)
+		.then((res) => res.data)
 		.catch((error) => {
 			error.response.data;
 		});
@@ -78,5 +78,14 @@ export async function getTabs({ pnr, password }, skip = 0) {
 		.then((res) => res.data)
 		.catch((error) => {
 			throw error.response.data;
+		});
+}
+
+export async function tabWithIdExists(host, tabId) {
+	return axios
+		.get(`http://${host}/api/tabs/get/${tabId}`, { params: { exists: '' } })
+		.then((res) => res.data)
+		.catch((error) => {
+			throw error;
 		});
 }

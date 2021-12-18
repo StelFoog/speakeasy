@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 // takes a date or day in the week (number 0-6) and returns the corresponding weekday
@@ -14,4 +16,8 @@ export function lastWeekDates(offset = 0) {
 	for (let i = 6; i >= 0; i--) dates.push(new Date(new Date().setDate(date.getDate() - i)));
 
 	return dates;
+}
+
+export function formatDateTime(date) {
+	return moment(date).format('YYYY-MM-DD hh:mm');
 }
