@@ -34,10 +34,8 @@ export default function SideBar() {
 					<span className={styles.staffName}>{user.name}</span>
 					<span className={styles.staffPnr}>{user.pnr}</span>
 				</SideBarItem>
-				<SideBarItem path="drinks">Drinks</SideBarItem>
-				<SideBarItem path="test">Test</SideBarItem>
-				<SideBarItem path="example">Example</SideBarItem>
 				<SideBarItem path="members">Members</SideBarItem>
+				<SideBarItem path="speakeasy">Inside</SideBarItem>
 				<SideBarItem path="tabs">Tabs</SideBarItem>
 			</ul>
 		</section>
