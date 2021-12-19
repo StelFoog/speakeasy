@@ -17,7 +17,7 @@ function InsideMembers({ members, onLeave }) {
 					<div key={_id}>
 						<Member name={name} pnr={pnr} status={'INSIDE'} />
 						<button>
-							<Link href="/" passHref>
+							<Link href={`/tabs/open/${_id}`} passHref>
 								<a> Open tab</a>
 							</Link>
 						</button>
