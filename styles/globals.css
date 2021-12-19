@@ -18,15 +18,16 @@ body {
 }
 
 section.content {
-	margin-left: 220px; /* Width of sidebar */
+	padding-left: 220px; /* Width of sidebar */
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	width: 100%;
+	width: 100vw;
+	max-width: 100%;
 }
 
 section.content:only-child {
-	margin: 0;
+	padding: 0;
 }
 
 main {
