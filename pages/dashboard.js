@@ -161,7 +161,7 @@ export default function Dashboard() {
 					}
 				/>
 				<div className={styles.reportsAndHours}>
-					{(loading || true) && <SmallLoader style={{ alignSelf: 'center' }} />}
+					{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 					<Summary reports={reports} />
 					<OldReports reports={reports} />
 				</div>
