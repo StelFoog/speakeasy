@@ -46,7 +46,7 @@ function OutsideMembers({ members, onEnter }) {
 					<div key={_id}>
 						<Member name={name} pnr={pnr} status={''} />
 						<button>
-							<Link href={`/tabs/${pnr}`} passHref>
+							<Link href={`/tabs/open/${_id}`} passHref>
 								<a> Open tab</a>
 							</Link>
 						</button>

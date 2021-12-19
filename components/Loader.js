@@ -5,8 +5,10 @@ export default function Loader({ size = 150, spacing = 8, style = {} }) {
 		<div
 			className={styles.loader}
 			style={{
-				width: `${size}px`,
-				height: `${size}px`,
+				minWidth: `${size}px`,
+				maxWidth: `${size}px`,
+				minHeight: `${size}px`,
+				maxHeight: `${size}px`,
 				padding: `${spacing}px`,
 				...style,
 			}}
@@ -29,8 +31,10 @@ export function SmallLoader({ size = 50, spacing = 5, style = {} }) {
 		<div
 			className={styles.loader}
 			style={{
-				width: `${size}px`,
-				height: `${size}px`,
+				minWidth: `${size}px`,
+				maxWidth: `${size}px`,
+				minHeight: `${size}px`,
+				maxHeight: `${size}px`,
 				padding: `${spacing}px`,
 				animationDuration: SMALL_ROTATE_TIME,
 				...style,

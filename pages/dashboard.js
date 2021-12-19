@@ -23,7 +23,7 @@ function MetaData({ name = 'Name Namesson' }) {
 function Summary({ reports }) {
 	return (
 		<div className={styles.bla}>
-			{'Total hours worked this week: '}
+			{'Total hours worked last ten shifts: '}
 			{reports.reduce((sum, { hours }) => sum + hours, 0)}
 		</div>
 	);
