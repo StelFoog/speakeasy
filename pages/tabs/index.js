@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { SmallLoader } from '../../components/Loader';
 import { selectUser } from '../../redux/user';
 import styles from '../../styles/TabList.module.css';
 import { getTabs } from '../../util/db/tabs';
@@ -36,7 +37,7 @@ function TabsList({ tabsCollection, loading, error, handleGetMoreTabs }) {
 					))
 				)}
 			</ul>
-			{!!loading && 'Loading...'}
+			{!!loading && <SmallLoader />}
 			{!!error && error}
 			{!loading && !error && <button onClick={handleGetMoreTabs}>More tabs</button>}
 		</>
@@ -46,9 +47,7 @@ function TabsList({ tabsCollection, loading, error, handleGetMoreTabs }) {
 export default function Tabs() {
 	const user = useSelector(selectUser);
 	const [tabsCollection, setTabsCollection] = useState([]);
-	// const [page, setPage] = useState(0);
 	const [loading, setLoading] = useState(null);
-	// const [noMorePages, setNoMorePages] = useState(false);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {

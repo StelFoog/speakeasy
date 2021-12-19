@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from '../styles/Home.module.css';
+import Loader, { SmallLoader } from '../components/Loader';
 
 export default function Example() {
 	return (
@@ -30,6 +31,8 @@ export default function Example() {
 						<a>Go to test</a>
 					</Link>
 				</p>
+
+				<SmallLoader />
 			</main>
 		</div>
 	);
