@@ -27,6 +27,7 @@ section.content {
 }
 
 section.content:only-child {
+	/* No sidebar */
 	padding: 0;
 }
 
