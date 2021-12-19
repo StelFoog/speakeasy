@@ -59,7 +59,7 @@ function Tab({ pnr, timeOpened, timeClosed, items, closed, addDrink, removeDrink
 					</li>
 				))}
 			</ul>
-			{loading && <SmallLoader />}
+			{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 		</Box>
 	);
 }
@@ -87,7 +87,7 @@ function SearchDrink({ query, setQuery, onSearch, drinks, addDrink, loading }) {
 				</button>
 			</form>
 
-			{loading && <SmallLoader />}
+			{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 
 			{!!drinks.length && (
 				<ul className={styles.searchList}>
