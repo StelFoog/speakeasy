@@ -5,6 +5,7 @@ import { selectUser } from '../redux/user';
 import styles from '../styles/Members.module.css';
 import { getMembers } from '../util/db/members';
 import { SmallLoader } from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function MembersList({ members, loading }) {
 	return (
@@ -34,20 +35,10 @@ export default function Members() {
 				setMembers(data);
 				setLoading(false);
 			})
-			.catch((e) => {
-				console.error(e);
+			.catch((error) => {
+				toast.error(error);
 				setLoading(false);
 			});
-		// fetch("api/members/get", {
-		//   method: 'GET',
-		//   headers: {
-		//     'Content-Type': 'application/json',
-		//     Authorization: `${user.pnr}+${user.password}`,
-		//   }
-		// })
-		//   .then(res => res.json())
-		//   .then(data => setMembers(data))
-		//   .catch((err) => console.log(err.statusText));
 	}, []);
 	return <MembersList members={members} loading={loading} />;
 }

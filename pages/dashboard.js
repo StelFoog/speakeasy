@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { getOwnReports, insertReport } from '../util/db/reports';
 import TextInput from '../components/TextInput';
 import { SmallLoader } from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function MetaData({ name = 'Name Namesson' }) {
 	return (
@@ -116,10 +117,15 @@ export default function Dashboard() {
 
 	useEffect(() => {
 		setLoading(true);
-		getOwnReports({ pnr, password }).then((data) => {
-			setReports(data);
-			setLoading(false);
-		});
+		getOwnReports({ pnr, password })
+			.then((data) => {
+				setReports(data);
+				setLoading(false);
+			})
+			.catch((error) => {
+				toast.error(error);
+				setLoading(false);
+			});
 	}, []);
 
 	function setHoursWorked(input) {
@@ -134,13 +140,13 @@ export default function Dashboard() {
 					makeReport={(report) => {
 						setLoading(true);
 						insertReport({ pnr, password }, report)
-							.then((data) => {
+							.then(() => {
 								if (reports.length === 9) reports.pop();
 								setReports([report, ...reports].sort(dateSorter));
 								setLoading(false);
 							})
-							.catch((e) => {
-								console.error(e);
+							.catch((error) => {
+								toast.error(error);
 								setLoading(false);
 							});
 					}}

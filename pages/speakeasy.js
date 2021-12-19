@@ -7,6 +7,7 @@ import memberStyles from '../styles/Members.module.css';
 import { getMembers, setMemberOutside, setMemberInside } from '../util/db/members';
 import Link from 'next/link';
 import { SmallLoader } from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function InsideMembers({ members, onLeave }) {
 	return (
@@ -71,19 +72,23 @@ export default function Speakeasy() {
 
 	useEffect(() => {
 		setLoading(true);
-		getMembers({ pnr: user.pnr, password: user.password }).then((members) => {
-			setInsideMembers(
-				members.filter(({ inside }) => {
-					return inside;
-				})
-			);
-			setOutsideMembers(
-				members.filter(({ inside }) => {
-					return !inside;
-				})
-			);
-			setLoading(false);
-		});
+		getMembers({ pnr: user.pnr, password: user.password })
+			.then((members) => {
+				setInsideMembers(
+					members.filter(({ inside }) => {
+						return inside;
+					})
+				);
+				setOutsideMembers(
+					members.filter(({ inside }) => {
+						return !inside;
+					})
+				);
+				setLoading(false);
+			})
+			.catch((error) => {
+				toast.error(error);
+			});
 	}, []);
 
 	return (
@@ -112,7 +117,7 @@ export default function Speakeasy() {
 									setLoading(false);
 								})
 								.catch((error) => {
-									console.error(error);
+									toast.error(error);
 									setLoading(false);
 								});
 						}}
@@ -137,7 +142,7 @@ export default function Speakeasy() {
 									setLoading(false);
 								})
 								.catch((error) => {
-									console.error(error);
+									toast.error(error);
 									setLoading(false);
 								});
 						}}

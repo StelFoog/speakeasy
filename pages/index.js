@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/user';
 import { login } from '../util/db/staff';
 import { SmallLoader } from '../components/Loader';
+import { toast } from 'react-toastify';
 
 function LoginForm({ pnr, setPnr, password, setPassword, handleSubmit, loading }) {
 	return (
@@ -48,7 +49,6 @@ function LoginForm({ pnr, setPnr, password, setPassword, handleSubmit, loading }
 export default function Index() {
 	const [password, setPassword] = useState('');
 	const [pnr, setPnr] = useState('');
-	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const dispatch = useDispatch();
@@ -61,9 +61,8 @@ export default function Index() {
 				setLoading(false);
 				router.push('/dashboard');
 			})
-			.catch(({ error }) => {
-				setError(error);
-				setTimeout(() => setError(''), 5000);
+			.catch((error) => {
+				toast.error(error);
 				setLoading(false);
 			});
 	}
@@ -86,7 +85,6 @@ export default function Index() {
 						handleSubmit={handleSubmit}
 						loading={loading}
 					/>
-					<ErrorText isDisabled={!error} error={error} />
 				</div>
 			</main>
 		</div>
