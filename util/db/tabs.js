@@ -3,6 +3,8 @@ import axios from 'axios';
 function instance(pnr, password) {
 	return axios.create({
 		baseURL: '/api/tabs/',
+		timeout: 5000,
+		timeoutErrorMessage: "Couldn't get a response from the server", // Could maybe be more clear?
 		headers: {
 			Authorization: `${pnr}+${password}`,
 		},
@@ -14,7 +16,8 @@ export async function openTab({ pnr, password }, memberPnr) {
 		.put(`/${memberPnr}/open`)
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -23,7 +26,8 @@ export async function closeTab({ pnr, password }, memberPnr) {
 		.post(`/${memberPnr}/close`)
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -32,7 +36,8 @@ export async function getClosedTabs({ pnr, password }, memberPnr, skip = 0) {
 		.get(`/${memberPnr}/get`, { params: { closed: '', offset: skip } })
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -41,7 +46,8 @@ export async function getOpenTab({ pnr, password }, memberPnr) {
 		.get(`/${memberPnr}/get`)
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -50,7 +56,8 @@ export async function addItemToTab({ pnr, password }, memberPnr, itemId) {
 		.post(`/${memberPnr}/add/${itemId}`)
 		.then((res) => res.data)
 		.catch((error) => {
-			error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -59,7 +66,8 @@ export async function removeItemFromTab({ pnr, password }, memberPnr, itemId) {
 		.post(`/${memberPnr}/remove/${itemId}`)
 		.then((res) => res.data)
 		.catch((error) => {
-			error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -68,7 +76,8 @@ export async function getTabFromId({ pnr, password }, tabId) {
 		.get(`/get/${tabId}`)
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -77,7 +86,8 @@ export async function getTabs({ pnr, password }, skip = 0) {
 		.get('/get', { params: { skip } })
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error.response.data;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
 
@@ -86,6 +96,7 @@ export async function tabWithIdExists(host, tabId) {
 		.get(`http://${host}/api/tabs/get/${tabId}`, { params: { exists: '' } })
 		.then((res) => res.data)
 		.catch((error) => {
-			throw error;
+			if (error.response) throw error.response.data.error;
+			else throw error.message;
 		});
 }
