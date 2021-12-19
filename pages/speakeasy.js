@@ -6,6 +6,7 @@ import styles from '../styles/Speakeasy.module.css';
 import memberStyles from '../styles/Members.module.css';
 import { getMembers, setMemberOutside, setMemberInside } from '../util/db/members';
 import Link from 'next/link';
+import { SmallLoader } from '../components/Loader';
 
 function InsideMembers({ members, onLeave }) {
 	return (
@@ -65,9 +66,11 @@ function OutsideMembers({ members, onEnter }) {
 export default function Speakeasy() {
 	const [outsideMembers, setOutsideMembers] = useState([]);
 	const [insideMembers, setInsideMembers] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const user = useSelector(selectUser);
 
 	useEffect(() => {
+		setLoading(true);
 		getMembers({ pnr: user.pnr, password: user.password }).then((members) => {
 			setInsideMembers(
 				members.filter(({ inside }) => {
@@ -79,53 +82,67 @@ export default function Speakeasy() {
 					return !inside;
 				})
 			);
+			setLoading(false);
 		});
 	}, []);
 
 	return (
 		<main>
 			<div className={styles.container}>
-				<InsideMembers
-					members={insideMembers}
-					onLeave={(memberPnr) => {
-						setMemberOutside({ pnr: user.pnr, password: user.password }, memberPnr)
-							.then((res) => {
-								if (res.acknowledged) {
-									const member = insideMembers.find(({ pnr }) => {
-										return pnr === memberPnr;
-									});
-									setInsideMembers(
-										insideMembers.filter(({ pnr }) => {
-											return pnr !== memberPnr;
-										})
-									);
+				{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
+				<div className={styles.membersContainer}>
+					<InsideMembers
+						members={insideMembers}
+						onLeave={(memberPnr) => {
+							setLoading(true);
+							setMemberOutside({ pnr: user.pnr, password: user.password }, memberPnr)
+								.then((res) => {
+									if (res.acknowledged) {
+										const member = insideMembers.find(({ pnr }) => {
+											return pnr === memberPnr;
+										});
+										setInsideMembers(
+											insideMembers.filter(({ pnr }) => {
+												return pnr !== memberPnr;
+											})
+										);
 
-									setOutsideMembers([member, ...outsideMembers]);
-								}
-							})
-							.catch(console.error);
-					}}
-				/>
-				<OutsideMembers
-					members={outsideMembers}
-					onEnter={(memberPnr) => {
-						setMemberInside({ pnr: user.pnr, password: user.password }, memberPnr)
-							.then((res) => {
-								if (res.acknowledged) {
-									const member = outsideMembers.find(({ pnr }) => {
-										return pnr === memberPnr;
-									});
-									setOutsideMembers(
-										outsideMembers.filter(({ pnr }) => {
-											return pnr !== memberPnr;
-										})
-									);
-									setInsideMembers([member, ...insideMembers]);
-								}
-							})
-							.catch(console.error);
-					}}
-				/>
+										setOutsideMembers([member, ...outsideMembers]);
+									}
+									setLoading(false);
+								})
+								.catch((error) => {
+									console.error(error);
+									setLoading(false);
+								});
+						}}
+					/>
+					<OutsideMembers
+						members={outsideMembers}
+						onEnter={(memberPnr) => {
+							setLoading(true);
+							setMemberInside({ pnr: user.pnr, password: user.password }, memberPnr)
+								.then((res) => {
+									if (res.acknowledged) {
+										const member = outsideMembers.find(({ pnr }) => {
+											return pnr === memberPnr;
+										});
+										setOutsideMembers(
+											outsideMembers.filter(({ pnr }) => {
+												return pnr !== memberPnr;
+											})
+										);
+										setInsideMembers([member, ...insideMembers]);
+									}
+									setLoading(false);
+								})
+								.catch((error) => {
+									console.error(error);
+									setLoading(false);
+								});
+						}}
+					/>
+				</div>
 			</div>
 		</main>
 	);

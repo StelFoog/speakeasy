@@ -1,18 +1,20 @@
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import Loader, { SmallLoader } from '../../../components/Loader';
 import { selectUser } from '../../../redux/user';
 import styles from '../../../styles/OpenTab.module.css';
 import { getMember, memberWithIdExists } from '../../../util/db/members';
 import { getOpenTab, openTab } from '../../../util/db/tabs';
 
-function NoTab({ member, handleOpenTab }) {
+function NoTab({ member, handleOpenTab, loading }) {
 	return (
 		<div className={styles.container}>
 			<span>
 				<span title={member.pnr}>{member.name}</span> has no open tab
 			</span>
 			<button onClick={handleOpenTab}>Open new tab</button>
+			{loading && <SmallLoader />}
 		</div>
 	);
 }
@@ -49,7 +51,12 @@ export default function OpenTab({ id }) {
 
 	if (error) return <main>{error}</main>;
 
-	if (member === null || tab === null) return <main>Loading...</main>;
+	if (member === null || tab === null)
+		return (
+			<main>
+				<Loader />
+			</main>
+		);
 
 	if (tab) return <main>Redirecting...</main>;
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Box from '../../components/Box';
+import Loader, { SmallLoader } from '../../components/Loader';
 import TextInput from '../../components/TextInput';
 import { selectUser } from '../../redux/user';
 import styles from '../../styles/Tab.module.css';
@@ -31,7 +32,7 @@ function Times({ decorator, time }) {
 	);
 }
 
-function Tab({ pnr, timeOpened, timeClosed, items, closed, addDrink, removeDrink }) {
+function Tab({ pnr, timeOpened, timeClosed, items, closed, addDrink, removeDrink, loading }) {
 	return (
 		<Box>
 			<div className={styles.tabInfo}>
@@ -58,11 +59,20 @@ function Tab({ pnr, timeOpened, timeClosed, items, closed, addDrink, removeDrink
 					</li>
 				))}
 			</ul>
+			{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 		</Box>
 	);
 }
 
-function SearchDrink({ query, setQuery, onSearch, drinks, addDrink }) {
+function CloseTab({ handleCloseTab }) {
+	return (
+		<button className={styles.closeButton} onClick={handleCloseTab}>
+			Close Tab
+		</button>
+	);
+}
+
+function SearchDrink({ query, setQuery, onSearch, drinks, addDrink, loading }) {
 	return (
 		<Box>
 			<form
@@ -76,6 +86,8 @@ function SearchDrink({ query, setQuery, onSearch, drinks, addDrink }) {
 					Search
 				</button>
 			</form>
+
+			{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 
 			{!!drinks.length && (
 				<ul className={styles.searchList}>
@@ -94,54 +106,78 @@ function SearchDrink({ query, setQuery, onSearch, drinks, addDrink }) {
 export default function TabWithID({ id }) {
 	const user = useSelector(selectUser);
 	const [tab, setTab] = useState(null);
+	const [loadingTab, setLoadingTab] = useState(false);
 	const [error, setError] = useState('');
 
 	const [query, setQuery] = useState('');
 	const [drinks, setDrinks] = useState([]);
+	const [loadingSearch, setLoadingSearch] = useState(false);
 
 	useEffect(() => {
+		setLoadingTab(true);
 		getTabFromId(user, id)
-			.then((data) => setTab(data))
-			.catch((e) => setError(e));
+			.then((data) => {
+				setTab(data);
+				setLoadingTab(false);
+			})
+			.catch((e) => {
+				setError(e);
+				setLoadingTab(false);
+			});
 	}, []);
 
 	function search() {
+		setLoadingSearch(true);
 		searchDrinks(query).then((d) => {
 			if (d) setDrinks(d);
 			else setDrinks([]);
+			setLoadingSearch(false);
 		});
 	}
 
 	function addDrink(id) {
-		if (!tab.closed) addItemToTab(user, tab.pnr, id).then((items) => setTab({ ...tab, items }));
+		if (tab.closed) return;
+		setLoadingTab(true);
+		addItemToTab(user, tab.pnr, id).then((items) => {
+			setTab({ ...tab, items });
+			setLoadingTab(false);
+		});
 	}
 
 	function removeDrink(id) {
-		if (!tab.closed)
-			removeItemFromTab(user, tab.pnr, id).then((items) => setTab({ ...tab, items }));
+		if (tab.closed) return;
+		setLoadingTab(true);
+		removeItemFromTab(user, tab.pnr, id).then((items) => {
+			setTab({ ...tab, items });
+			setLoadingTab(false);
+		});
 	}
 
 	function handleCloseTab() {
-		if (!tab.closed) closeTab(user, tab.pnr).then((data) => setTab(data));
+		if (tab.closed) return;
+		setLoadingTab(true);
+		closeTab(user, tab.pnr).then((data) => {
+			setTab(data);
+			setLoadingTab(false);
+		});
 	}
 
-	if (!tab) return <span>Loading...</span>;
+	if (!tab) return <Loader />;
 	if (error) return <span>An error has occured</span>;
 
 	return (
 		<main>
-			<Tab {...tab} addDrink={addDrink} removeDrink={removeDrink} />
+			<Tab {...tab} addDrink={addDrink} removeDrink={removeDrink} loading={loadingTab} />
 			{!tab.closed && (
 				<>
-					<button className={styles.closeButton} onClick={handleCloseTab}>
-						Close Tab
-					</button>
+					<CloseTab handleCloseTab={handleCloseTab} />
 					<SearchDrink
 						query={query}
 						setQuery={setQuery}
 						onSearch={search}
 						drinks={drinks}
 						addDrink={addDrink}
+						loading={loadingSearch}
 					/>
 				</>
 			)}

@@ -9,6 +9,7 @@
 }
 
 .reportsAndHours {
+	display: flex;
 	flex-direction: column;
 }
 
@@ -26,7 +27,16 @@
 	margin: 4px 2px 0px;
 }
 
-.newReport input,
+.noteDiv {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.noteDiv label {
+	margin: 0 6px 0 2px;
+}
+
 .newReport textarea {
 	width: 100%;
 }
@@ -52,6 +62,7 @@
 		max-width: 320px;
 	}
 }
+
 .report {
 	flex-wrap: wrap;
 	flex-direction: column;
