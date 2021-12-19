@@ -9,6 +9,7 @@
 }
 
 .reportsAndHours {
+	display: flex;
 	flex-direction: column;
 }
 
@@ -52,6 +53,7 @@
 		max-width: 320px;
 	}
 }
+
 .report {
 	flex-wrap: wrap;
 	flex-direction: column;
