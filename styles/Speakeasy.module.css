@@ -1,27 +1,30 @@
 .container {
-    display: flex;
-    flex-direction: row;
-    width: 100px;
+	display: flex;
+	flex-direction: column;
 }
-.membersStatus{
-    display: flex;
-    flex-direction: row;
-    width: 200px;
-    border-radius: 25px;
-    border: #0a2433 solid 1px;
-    max-width: 400px;
-    padding: 10px;
+
+.membersContainer {
+	display: flex;
+	flex-direction: row;
 }
-.statusText{
-    width: 100%;
-    justify-content: center;
+
+.membersStatus {
+	display: flex;
+	flex-direction: row;
+	width: 200px;
+	border-radius: 25px;
+	border: #0a2433 solid 1px;
+	max-width: 400px;
+	padding: 10px;
 }
+
+.statusText {
+	width: 100%;
+	justify-content: center;
+}
+
 .center {
-    border: 5px solid #FFFF00;
-    display: flex;
-    justify-content: center;
+	border: 5px solid #ffff00;
+	display: flex;
+	justify-content: center;
 }
-
-
-
-

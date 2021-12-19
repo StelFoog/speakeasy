@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user';
 import styles from '../styles/SideBar.module.css';
 
+export const EXCLUDED_PATHS = ['/'];
+
 function SideBarItem({ children, path }) {
 	// returns a list item as a next link with correct styling and marked if on the correct path
 	const router = useRouter();
@@ -21,7 +23,7 @@ function SideBarItem({ children, path }) {
 export default function SideBar() {
 	const user = useSelector(selectUser);
 	const router = useRouter();
-	if (router.pathname === '/') return <></>;
+	if (EXCLUDED_PATHS.includes(router.pathname)) return <></>;
 
 	return (
 		<section>

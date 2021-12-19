@@ -8,6 +8,7 @@ import DaySelector from '../components/DaySelector';
 import { useEffect, useState } from 'react';
 import { getOwnReports, insertReport } from '../util/db/reports';
 import TextInput from '../components/TextInput';
+import { SmallLoader } from '../components/Loader';
 
 function MetaData({ name = 'Name Namesson' }) {
 	return (
@@ -111,10 +112,13 @@ export default function Dashboard() {
 	const [hours, setHours] = useState(0);
 	const [note, setNote] = useState('');
 	const [reports, setReports] = useState([]);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		setLoading(true);
 		getOwnReports({ pnr, password }).then((data) => {
 			setReports(data);
+			setLoading(false);
 		});
 	}, []);
 
@@ -128,15 +132,17 @@ export default function Dashboard() {
 			<main className={styles.container}>
 				<NewReport
 					makeReport={(report) => {
-						if (reports.length === 9) {
-							reports.pop();
-							setReports(reports);
-						}
+						setLoading(true);
 						insertReport({ pnr, password }, report)
 							.then((data) => {
+								if (reports.length === 9) reports.pop();
 								setReports([report, ...reports].sort(dateSorter));
+								setLoading(false);
 							})
-							.catch(console.error);
+							.catch((e) => {
+								console.error(e);
+								setLoading(false);
+							});
 					}}
 					selectedDate={date}
 					setSelectedDate={setDate}
@@ -149,6 +155,7 @@ export default function Dashboard() {
 					}
 				/>
 				<div className={styles.reportsAndHours}>
+					{loading && <SmallLoader style={{ alignSelf: 'center' }} />}
 					<Summary reports={reports} />
 					<OldReports reports={reports} />
 				</div>
