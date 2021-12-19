@@ -5,7 +5,7 @@
 	background-color: #0a2433;
 	color: #bbb;
 	max-height: 100%;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	bottom: 0;

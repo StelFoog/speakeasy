@@ -13,14 +13,16 @@ body {
 	min-height: 100vh;
 }
 
+#__next > div {
+	width: 100%;
+}
+
 section.content {
-	flex: 1;
 	margin-left: 220px; /* Width of sidebar */
 	display: flex;
 	flex-direction: column;
 	height: 100%;
-	/* max-height: 100vh;
-	overflow: scroll; */
+	width: 100%;
 }
 
 section.content:only-child {
