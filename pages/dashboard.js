@@ -7,6 +7,7 @@ import styles from '../styles/Dashboard.module.css';
 import DaySelector from '../components/DaySelector';
 import { useEffect, useState } from 'react';
 import { getOwnReports, insertReport } from '../util/db/reports';
+import TextInput from '../components/TextInput';
 
 function MetaData({ name = 'Name Namesson' }) {
 	return (
@@ -62,26 +63,12 @@ function NewReport({
 					}}
 				>
 					<DaySelector dates={dates} selected={selectedDate} onChange={setSelectedDate} />
-					<table>
-						<tbody>
-							<tr>
-								<td>
-									<label>Hours:</label>
-								</td>
-								<td>
-									<input value={hours} onInput={(e) => setHours(e.target.value)} placeholder="0" />
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<label>Note:</label>
-								</td>
-								<td>
-									<textarea onChange={(e) => setNote(e.target.value)} />
-								</td>
-							</tr>
-						</tbody>
-					</table>
+					<TextInput label="Hours" value={hours} onChange={setHours} fullWidth />
+					<div className={styles.noteDiv}>
+						<label>Note:</label>
+
+						<textarea onChange={(e) => setNote(e.target.value)} />
+					</div>
 
 					<button type="submit" disabled={disableSubmit}>
 						Submit report
