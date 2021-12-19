@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import Box from '../../components/Box';
 import Loader, { SmallLoader } from '../../components/Loader';
 import TextInput from '../../components/TextInput';
@@ -107,7 +108,7 @@ export default function TabWithID({ id }) {
 	const user = useSelector(selectUser);
 	const [tab, setTab] = useState(null);
 	const [loadingTab, setLoadingTab] = useState(false);
-	const [error, setError] = useState('');
+	const [noTab, setNoTab] = useState(false);
 
 	const [query, setQuery] = useState('');
 	const [drinks, setDrinks] = useState([]);
@@ -120,50 +121,71 @@ export default function TabWithID({ id }) {
 				setTab(data);
 				setLoadingTab(false);
 			})
-			.catch((e) => {
-				setError(e);
+			.catch((error) => {
+				toast.error(error);
+				noTab(true);
 				setLoadingTab(false);
 			});
 	}, []);
 
 	function search() {
 		setLoadingSearch(true);
-		searchDrinks(query).then((d) => {
-			if (d) setDrinks(d);
-			else setDrinks([]);
-			setLoadingSearch(false);
-		});
+		searchDrinks(query)
+			.then((d) => {
+				if (d) setDrinks(d);
+				else setDrinks([]);
+				setLoadingSearch(false);
+			})
+			.catch(() => {
+				toast.error('There was an issue searching for the drinks');
+				setLoadingSearch(false);
+			});
 	}
 
 	function addDrink(id) {
 		if (tab.closed) return;
 		setLoadingTab(true);
-		addItemToTab(user, tab.pnr, id).then((items) => {
-			setTab({ ...tab, items });
-			setLoadingTab(false);
-		});
+		addItemToTab(user, tab.pnr, id)
+			.then((items) => {
+				setTab({ ...tab, items });
+				setLoadingTab(false);
+			})
+			.catch((error) => {
+				toast.error(error);
+				setLoadingTab(false);
+			});
 	}
 
 	function removeDrink(id) {
 		if (tab.closed) return;
 		setLoadingTab(true);
-		removeItemFromTab(user, tab.pnr, id).then((items) => {
-			setTab({ ...tab, items });
-			setLoadingTab(false);
-		});
+		removeItemFromTab(user, tab.pnr, id)
+			.then((items) => {
+				setTab({ ...tab, items });
+				setLoadingTab(false);
+			})
+			.catch((error) => {
+				toast.error(error);
+				setLoadingTab(false);
+			});
 	}
 
 	function handleCloseTab() {
 		if (tab.closed) return;
 		setLoadingTab(true);
-		closeTab(user, tab.pnr).then((data) => {
-			setTab(data);
-			setLoadingTab(false);
-		});
+		closeTab(user, tab.pnr)
+			.then((data) => {
+				setTab(data);
+				setLoadingTab(false);
+			})
+			.catch((error) => {
+				toast.error(error);
+				setLoadingTab(false);
+			});
 	}
 
+	if (noTab) return <main>Couldn't load tab</main>;
 	if (!tab) return <Loader />;
-	if (error) return <span>An error has occured</span>;
 
 	return (
 		<main>

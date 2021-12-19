@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { SmallLoader } from '../../components/Loader';
 import { selectUser } from '../../redux/user';
 import styles from '../../styles/TabList.module.css';
@@ -15,7 +16,7 @@ function OpenClosedMark({ closed }) {
 	);
 }
 
-function TabsList({ tabsCollection, loading, error, handleGetMoreTabs }) {
+function TabsList({ tabsCollection, loading, noMoreTabs, handleGetMoreTabs }) {
 	return (
 		<>
 			<ul className={styles.list}>
@@ -38,8 +39,10 @@ function TabsList({ tabsCollection, loading, error, handleGetMoreTabs }) {
 				)}
 			</ul>
 			{!!loading && <SmallLoader />}
-			{!!error && error}
-			{!loading && !error && <button onClick={handleGetMoreTabs}>More tabs</button>}
+			{!!noMoreTabs && noMoreTabs}
+			{!loading && !noMoreTabs && !!tabsCollection.length && (
+				<button onClick={handleGetMoreTabs}>More tabs</button>
+			)}
 		</>
 	);
 }
@@ -48,24 +51,24 @@ export default function Tabs() {
 	const user = useSelector(selectUser);
 	const [tabsCollection, setTabsCollection] = useState([]);
 	const [loading, setLoading] = useState(null);
-	const [error, setError] = useState(null);
+	const [noMoreTabs, setNoMoreTabs] = useState(null);
 
 	useEffect(() => {
 		handleGetTabs();
 	}, []);
 
 	function handleGetTabs() {
-		if (!loading && !error) {
+		if (!loading && !noMoreTabs) {
 			setLoading(true);
 			getTabs(user, tabsCollection.length)
 				.then((moreTabs) => {
 					setTabsCollection([...tabsCollection, moreTabs]);
-					if (moreTabs.length < 10) setError('No more tabs');
-					// else setNoMorePages(false);
+					if (moreTabs.length < 10) setNoMoreTabs('No more tabs');
 					setLoading(false);
 				})
-				.catch(() => {
-					setError('There was an issue while getting tabs');
+				.catch((error) => {
+					toast.error(error);
+					setLoading(false);
 				});
 		}
 	}
@@ -75,11 +78,8 @@ export default function Tabs() {
 			<TabsList
 				tabsCollection={tabsCollection}
 				loading={loading}
-				error={error}
+				noMoreTabs={noMoreTabs}
 				handleGetMoreTabs={handleGetTabs}
-				// page={page}
-				// setPage={setPage}
-				// noMorePages={noMorePages}
 			/>
 		</main>
 	);

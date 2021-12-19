@@ -4,6 +4,8 @@ import SideBar from '../components/SideBar';
 import store, { persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoginVerified from '../components/LoginVerified';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function MyApp({ Component, pageProps }) {
 	return (
@@ -15,6 +17,14 @@ function MyApp({ Component, pageProps }) {
 						<Component {...pageProps} />
 					</section>
 				</LoginVerified>
+				<ToastContainer
+					position="bottom-right"
+					autoClose={5000}
+					closeOnClick
+					pauseOnFocusLoss
+					draggableDirection="x"
+					theme="colored"
+				/>
 			</PersistGate>
 		</Provider>
 	);

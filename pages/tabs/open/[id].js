@@ -1,6 +1,7 @@
 import { useRouter } from 'next/dist/client/router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import Loader, { SmallLoader } from '../../../components/Loader';
 import { selectUser } from '../../../redux/user';
 import styles from '../../../styles/OpenTab.module.css';
@@ -24,12 +25,15 @@ export default function OpenTab({ id }) {
 	const router = useRouter();
 	const [member, setMember] = useState(null);
 	const [tab, setTab] = useState(null);
-	const [error, setError] = useState(null);
+	const [noLoad, setNoLoad] = useState(false);
 
 	useEffect(() => {
 		getMember(user, id)
-			.then((d) => setMember(d))
-			.catch(() => setError('There was an error getting the member'));
+			.then((data) => setMember(data))
+			.catch((error) => {
+				setNoLoad(true);
+				toast.error(error);
+			});
 	}, []);
 
 	useEffect(() => {
@@ -46,10 +50,10 @@ export default function OpenTab({ id }) {
 	function handleOpenTab() {
 		openTab(user, member.pnr)
 			.then((id) => router.push(`/tabs/${id}`))
-			.catch(() => setError('There was an error opening the new tab'));
+			.catch((error) => toast.error(error));
 	}
 
-	if (error) return <main>{error}</main>;
+	if (noLoad) return <main>Couldn't load member</main>;
 
 	if (member === null || tab === null)
 		return (
