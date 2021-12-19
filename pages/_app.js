@@ -12,10 +12,12 @@ function MyApp({ Component, pageProps }) {
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
 				<LoginVerified whitelist={['/']}>
-					<SideBar />
-					<section className={'content'}>
-						<Component {...pageProps} />
-					</section>
+					<div>
+						<SideBar />
+						<section className={'content'}>
+							<Component {...pageProps} />
+						</section>
+					</div>
 				</LoginVerified>
 				<ToastContainer
 					position="bottom-right"
