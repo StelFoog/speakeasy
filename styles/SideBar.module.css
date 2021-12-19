@@ -1,9 +1,14 @@
 .container {
 	min-width: 220px;
 	max-width: 220px;
+	height: 100vh;
 	background-color: #0a2433;
 	color: #bbb;
 	max-height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
 	display: flex;
 	flex-direction: column;
 	font-family: 'Inter', sans-serif;

@@ -10,6 +10,38 @@ body {
 #__next {
 	display: flex;
 	flex-direction: row;
+	min-height: 100vh;
+}
+
+#__next > div {
+	width: 100%;
+}
+
+section.content {
+	padding-left: 220px; /* Width of sidebar */
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100vw;
+	max-width: 100%;
+}
+
+section.content:only-child {
+	/* No sidebar */
+	padding: 0;
+}
+
+main {
+	width: 100%;
+	max-width: 840px;
+	padding: 0.6rem;
+	display: flex;
+	flex-direction: column;
+}
+
+form {
+	display: inherit;
+	flex-direction: inherit;
 }
 
 a {

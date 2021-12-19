@@ -1,0 +1,47 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    /* border-radius: 25px;
+    border: #0a2433 solid 1px; */
+    max-width: 400px;
+    padding: 13px;
+}
+
+.memberIdentity{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    flex: 1;
+}
+
+.memberName{
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.memberPnr{
+    font-size: 14px;
+    font-weight: 200;
+}
+.memberInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.status {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status.red {
+    background-color: darkred;
+}
+
+.status.green {
+    background-color: darkgreen;
+}

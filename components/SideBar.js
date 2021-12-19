@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../redux/user';
 import styles from '../styles/SideBar.module.css';
 
+export const EXCLUDED_PATHS = ['/'];
+
 function SideBarItem({ children, path }) {
 	// returns a list item as a next link with correct styling and marked if on the correct path
 	const router = useRouter();
@@ -21,18 +23,21 @@ function SideBarItem({ children, path }) {
 export default function SideBar() {
 	const user = useSelector(selectUser);
 	const router = useRouter();
-	if (router.pathname === '/') return <></>;
+	if (EXCLUDED_PATHS.includes(router.pathname)) return <></>;
 
 	return (
-		<ul className={styles.container}>
-			{/* Maybe remove ||, added to give some character, but maybe an icon instead */}
-			<li className={`selfCenter ${styles.menuHead}`}>|| Speakeasy ||</li>
-			<SideBarItem path="drinks">
-				<span className={styles.staffName}>{user.name}</span>
-				<span className={styles.staffPnr}>{user.pnr}</span>
-			</SideBarItem>
-			<SideBarItem path="test">Test</SideBarItem>
-			<SideBarItem path="example">Example</SideBarItem>
-		</ul>
+		<section>
+			<ul className={styles.container}>
+				{/* Maybe remove ||, added to give some character, but maybe an icon instead */}
+				<li className={`selfCenter ${styles.menuHead}`}>|| Speakeasy ||</li>
+				<SideBarItem path="dashboard">
+					<span className={styles.staffName}>{user.name}</span>
+					<span className={styles.staffPnr}>{user.pnr}</span>
+				</SideBarItem>
+				<SideBarItem path="members">Members</SideBarItem>
+				<SideBarItem path="speakeasy">Inside</SideBarItem>
+				<SideBarItem path="tabs">Tabs</SideBarItem>
+			</ul>
+		</section>
 	);
 }

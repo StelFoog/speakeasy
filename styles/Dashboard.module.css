@@ -1,0 +1,96 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.container > div {
+	padding: 0 0.4rem;
+}
+
+.reportsAndHours {
+	display: flex;
+	flex-direction: column;
+}
+
+.submittedReports {
+	flex: 1;
+}
+
+.newReport form {
+	display: flex;
+	flex-direction: column;
+}
+
+.newReport label {
+	font-size: 14px;
+	margin: 4px 2px 0px;
+}
+
+.noteDiv {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.noteDiv label {
+	margin: 0 6px 0 2px;
+}
+
+.newReport textarea {
+	width: 100%;
+}
+
+.newReport textarea {
+	resize: vertical;
+}
+
+.newReport button {
+	margin-top: 8px;
+}
+
+@media screen and (min-width: 640px) {
+	.container {
+		flex-direction: row-reverse;
+	}
+
+	.container > div {
+		flex: 1;
+	}
+
+	.newReport {
+		max-width: 320px;
+	}
+}
+
+.report {
+	flex-wrap: wrap;
+	flex-direction: column;
+	width: 100%;
+}
+.hoursAndDates {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.hours {
+	font-size: 22px;
+	font-weight: 1000;
+	align-self: flex-end;
+	margin: 2px;
+}
+.date {
+	font-size: 22px;
+	font-weight: 1000;
+	align-self: flex-start;
+	margin: 2px;
+}
+.notes {
+	font-size: 14px;
+	font-weight: 400;
+	word-wrap: break-word;
+}
+.bla {
+	flex-direction: column;
+}

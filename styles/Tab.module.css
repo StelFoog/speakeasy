@@ -1,0 +1,153 @@
+/* Tab */
+.tabContainer {
+	display: flex;
+	flex-direction: column;
+}
+
+.tabInfo {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 14px;
+	padding: 6px 4px;
+	border-bottom: 1px solid #ccc;
+}
+
+.tabInfo .member {
+	font-size: 20px;
+}
+
+.tabInfo .pill {
+	padding: 8px;
+	border-radius: 5px;
+	color: white;
+	font-size: 16px;
+}
+
+.tabInfo .open {
+	background-color: green;
+}
+
+.tabInfo .closed {
+	background-color: darkred;
+}
+
+.tabInfo .times {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.tabInfo .decorator {
+	font-size: 12px;
+}
+
+/* Tab items */
+.itemsList {
+	display: flex;
+	flex-direction: column;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.itemsList > li {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 4px;
+}
+
+.itemsList > li > div {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.itemsList > li > div > button {
+	min-width: 32px;
+	max-width: 32px;
+	min-height: 32px;
+	max-height: 32px;
+
+	color: white;
+	font-size: 20px;
+	font-weight: 600;
+
+	border: none;
+	border-radius: 5px;
+
+	cursor: pointer;
+}
+
+.itemsList > li > div > button.green {
+	background-color: darkgreen;
+}
+
+.itemsList > li > div > button.red {
+	background-color: darkred;
+}
+
+.itemsList > li > div > span {
+	min-width: 22px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Close Tab */
+
+.closeButton {
+	padding: 8px;
+	width: 100%;
+	background-color: #c31;
+	color: white;
+	border: none;
+	border-radius: 5px;
+}
+
+/* Search */
+.searchButton {
+	margin-top: 6px;
+	padding: 4px;
+}
+
+.searchList {
+	display: flex;
+	flex-direction: column;
+	padding-left: 0;
+	margin: 8px 0 0;
+	list-style-type: none;
+}
+
+.searchList > li {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 6px;
+	border-bottom: 1px solid #ccc;
+}
+
+.searchList > li:last-child {
+	border-bottom: none;
+}
+
+.searchList > li > button {
+	min-width: 32px;
+	max-width: 32px;
+	min-height: 32px;
+	max-height: 32px;
+	background-color: darkgreen;
+	color: white;
+	font-size: 20px;
+	font-weight: 600;
+
+	border: none;
+	border-radius: 5px;
+}
+
+.searchList > li > button {
+	cursor: pointer;
+}

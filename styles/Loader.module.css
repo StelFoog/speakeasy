@@ -1,0 +1,39 @@
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	50% {
+		transform: rotate(180deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.loader {
+	position: relative;
+	width: 150px;
+	height: 150px;
+	display: block;
+	overflow: hidden;
+}
+
+.loader div {
+	height: 100%;
+}
+
+.loader:hover,
+.loader div:hover {
+	animation-play-state: paused;
+}
+
+.loader,
+.loader div {
+	border-radius: 50%;
+	padding: 8px;
+	border: 2px solid transparent;
+	animation: rotate linear 3.5s infinite;
+	border-top-color: #000000aa;
+	border-bottom-color: #0000ffaa;
+	will-change: transform;
+}
