@@ -1,15 +1,15 @@
 import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import ErrorText from '../components/ErrorText';
-import RequiredText from '../components/RequiredText';
 import TextInput from '../components/TextInput';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/user';
 import { login } from '../util/db/staff';
+import { SmallLoader } from '../components/Loader';
 
-function LoginForm({ pnr, setPnr, password, setPassword, handleSubmit }) {
+function LoginForm({ pnr, setPnr, password, setPassword, handleSubmit, loading }) {
 	return (
 		<>
 			<form
@@ -34,9 +34,12 @@ function LoginForm({ pnr, setPnr, password, setPassword, handleSubmit }) {
 					type="password"
 				/>
 				<br />
-				<button type="submit" disabled={!pnr || !password || pnr.length !== 10}>
-					Login
-				</button>
+				{!loading && (
+					<button type="submit" disabled={!pnr || !password || pnr.length !== 10}>
+						Login
+					</button>
+				)}
+				{loading && <SmallLoader style={{ margin: '0 auto' }} />}
 			</form>
 		</>
 	);
@@ -46,18 +49,22 @@ export default function Index() {
 	const [password, setPassword] = useState('');
 	const [pnr, setPnr] = useState('');
 	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const dispatch = useDispatch();
 
 	function handleSubmit() {
+		setLoading(true);
 		login({ pnr, password })
 			.then((user) => {
 				dispatch(setUser(user));
+				setLoading(false);
 				router.push('/dashboard');
 			})
 			.catch(({ error }) => {
 				setError(error);
 				setTimeout(() => setError(''), 5000);
+				setLoading(false);
 			});
 	}
 
@@ -77,7 +84,8 @@ export default function Index() {
 						setPassword={setPassword}
 						setPnr={setPnr}
 						handleSubmit={handleSubmit}
-					></LoginForm>
+						loading={loading}
+					/>
 					<ErrorText isDisabled={!error} error={error} />
 				</div>
 			</main>
