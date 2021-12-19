@@ -6,18 +6,16 @@ async function baseCall(query) {
 
 export async function searchDrinks(query) {
 	return baseCall(`search.php?s=${query}`)
-		.then((res) => {
-			if (res.status !== 200) throw res.statusText;
-			return res.data.drinks;
-		})
-		.catch((reason) => console.error(reason));
+		.then((res) => res.data.drinks)
+		.catch((error) => {
+			throw error.message;
+		});
 }
 
 export async function getDrinkFromId(id) {
-	return baseCall(`lookup.php?i=${id}`).then((res) => {
-		if (res.status !== 200) throw res.statusText;
-
-		if (res.data.drinks === null) return null;
-		else return res.data.drinks[0];
-	});
+	return baseCall(`lookup.php?i=${id}`)
+		.then((res) => res.data.drinks && res.data.drinks[0])
+		.catch((error) => {
+			throw error.message;
+		});
 }
